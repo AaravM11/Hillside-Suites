@@ -2,6 +2,7 @@
 body {
     background-color: #EDE6DB;
     text-align: center;
+    font-family: 'Montserrat', sans-serif;
 }
 .titleName {
     font-family: 'Poppins', sans-serif;
@@ -9,4 +10,21 @@ body {
 
 h2 {
     font-family: 'Montserrat', sans-serif;
+}
+
+.container-fluid {
+    padding: 2% 7%;
+}
+
+.navbar {
+    padding: 0 0 4.5rem;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.navbar-item {
+    font-size: 1.3rem;
 }
