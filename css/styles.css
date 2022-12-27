@@ -7,6 +7,10 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+#title {
+    background-image: url('images/testImage.webp');
+}
+
 h2 {
     font-family: 'Montserrat', sans-serif;
 }
