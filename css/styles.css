@@ -4,6 +4,9 @@ body {
     text-align: center;
 }
 .titleName {
-    font-family: "Andika", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
+h2 {
+    font-family: 'Montserrat', sans-serif;
+}
