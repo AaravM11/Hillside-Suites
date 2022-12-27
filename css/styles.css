@@ -1,7 +1,6 @@
 
 body {
     background-color: #EDE6DB;
-    text-align: center;
     font-family: 'Montserrat', sans-serif;
 }
 .titleName {
@@ -25,6 +24,7 @@ h2 {
     font-weight: 700;
 }
 
-.navbar-item {
-    font-size: 1.3rem;
+.nav-item {
+    font-size: 1.2rem;
+    padding: 0 8% 0 0;
 }
