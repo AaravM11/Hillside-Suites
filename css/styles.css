@@ -32,3 +32,10 @@ h2 {
     font-size: 1.2rem;
     padding: 0 8% 0 0;
 }
+
+.aboutImages {
+    align-items:center;
+}
+.Img {
+    max-width: 70%;
+}
