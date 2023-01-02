@@ -39,3 +39,11 @@ h2 {
 .Img {
     max-width: 70%;
 }
+.date {
+    margin-left: 40%;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+}
