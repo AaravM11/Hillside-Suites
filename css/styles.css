@@ -3,16 +3,13 @@ body {
     background-color: #EDE6DB;
     font-family: 'Montserrat', sans-serif;
 }
-.titleName {
-    font-family: 'Poppins', sans-serif;
-}
 
+/* Home Page */
 #title {
-    background-image: url('images/testImage.webp');
-}
-
-h2 {
-    font-family: 'Montserrat', sans-serif;
+    background-image: url(../images/homePage1.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 800px;
 }
 
 .container-fluid {
@@ -30,9 +27,28 @@ h2 {
 
 .nav-item {
     font-size: 1.2rem;
-    padding: 0 8% 0 0;
+    padding: 0 15% 0 0;
 }
 
+.nav-link {
+    color: white;
+}
+
+.btn {
+
+}
+
+.titleName {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+.subtitleName {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+/* About Page */
 .aboutImages {
     align-items:center;
 }
@@ -46,4 +62,8 @@ h2 {
 
 .container {
     display: flex;
+}
+
+.infoSection {
+    height: 300px;
 }
