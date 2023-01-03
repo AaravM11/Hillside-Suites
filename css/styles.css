@@ -5,7 +5,7 @@ body {
 }
 
 /* Home Page */
-#title {
+#titleMain {
     background-image: url(../images/homePage1.png);
     background-size: cover;
     background-repeat: no-repeat;
