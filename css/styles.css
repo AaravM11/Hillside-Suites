@@ -41,6 +41,7 @@ body {
 .titleName {
     font-family: 'Poppins', sans-serif;
     color: white;
+    margin-left: 40%; 
 }
 
 .subtitleName {
@@ -54,6 +55,8 @@ body {
 }
 .Img {
     max-width: 70%;
+    border-radius: 15%;
+    margin-top: 5%; 
 }
 .date {
     margin-left: 40%;
@@ -66,4 +69,8 @@ body {
 
 .infoSection {
     height: 300px;
+}
+
+.button {
+    margin-left: 45%; 
 }
