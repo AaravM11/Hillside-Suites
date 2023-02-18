@@ -4,6 +4,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.spacer {
+    padding: 3%;
+}
+
 /* Home Page */
 #titleMain {
     background-image: url(../images/homePage1.png);
@@ -34,19 +38,48 @@ body {
     color: rgb(255, 255, 255);
 }
 
-.btn {
-
-}
-
 .titleName {
     font-family: 'Poppins', sans-serif;
-    color: rgb(0, 0, 0);
-    margin-left: 30%; 
+    color: white;
+    font-size: 3.5rem;
 }
 
 .subtitleName {
-    font-family: 'Montserrat', sans-serif;
     color: white;
+}
+
+.title {
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    text-align: center;
+}
+
+.picSection {
+    height: 300px;
+}
+
+.homeSpa {
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+}
+
+.roomsPic1 {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+    padding: 4% 2% 2% 4%;
+}
+
+.roomsPic2 {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+    padding: 4% 5% 2% 4%;
+}
+
+#footer {
+    height: 300px;
 }
 
 /* About Page */
@@ -65,10 +98,6 @@ body {
 
 .container {
     display: flex;
-}
-
-.infoSection {
-    height: 300px;
 }
 
 .button {
