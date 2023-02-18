@@ -55,27 +55,48 @@ body {
 }
 
 .picSection {
-    height: 300px;
+    text-align: center;
 }
 
 .homeSpa {
-    width: 60%;
-    display: block;
-    margin: 0 auto;
+    width: 95%;
+    height: 650px;
+    object-fit: cover;
 }
 
 .roomsPic1 {
     width: 90%;
-    display: block;
-    margin: 0 auto;
-    padding: 4% 2% 2% 4%;
+    margin: 6% 0;
+    height: 563.56px;
+    object-fit: cover;
 }
 
 .roomsPic2 {
     width: 90%;
-    display: block;
-    margin: 0 auto;
-    padding: 4% 5% 2% 4%;
+    margin: 6% 0;
+    height: 563.56px;
+    object-fit: cover;
+}
+
+#info .container-fluid {
+    padding: 7%;
+    background-color: #417D7A;
+    text-align: center;
+    color: white;
+}
+
+.features {
+    padding: 3%;
+}
+
+.icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.featuresTitle {
+    font-family: 'Poppins', sans-serif;
+    padding: 1%;
 }
 
 #footer {
