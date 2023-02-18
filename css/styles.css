@@ -134,6 +134,17 @@ h1 {
     font-size: 1.3rem;
 }
 
+.mail {
+    padding: 6% 0 2% 0;
+    font-size: 2.5rem;
+}
+
+.signUpEmail {
+    padding: 8px;
+    margin: 1%;
+    width: 300px;
+}
+
 #footer {
     text-align: center;
     margin-top: 3%;
@@ -171,8 +182,6 @@ h1 {
 .button {
     margin-left: 45%; 
 }
-
-
 
 .slider {
     width: 500px;
