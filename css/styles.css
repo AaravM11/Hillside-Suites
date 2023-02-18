@@ -56,18 +56,12 @@ body {
 
 .picSection {
     text-align: center;
-}
-
-.homeSpa {
-    width: 95%;
-    height: 650px;
-    object-fit: cover;
+    position: relative;
 }
 
 .roomsPic1 {
-    width: 90%;
-    margin: 6% 0;
-    height: 563.56px;
+    width: 95%;
+    height: 650px;
     object-fit: cover;
 }
 
@@ -76,6 +70,27 @@ body {
     margin: 6% 0;
     height: 563.56px;
     object-fit: cover;
+}
+
+.testimonials {
+    background-color: #1D5C63;
+    width: 75%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: .95;
+}
+
+.quote {
+    font-size: 2rem;
+    color: white;
+    padding: 5% 14% 1% 14%;
+}
+
+.person {
+    font-size: 2rem;
+    color: white;
 }
 
 #info .container-fluid {
