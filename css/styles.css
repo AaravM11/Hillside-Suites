@@ -242,3 +242,53 @@ h1 {
   .clearfix{
     clear:both
 }
+
+.column {
+    float: left;
+    width: 33.33%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .card {
+    background-color: #1D5C63;
+    max-width: 370px;
+    max-height: 500px;
+    margin-left: 10%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color:white;
+    padding-left: 10%;
+    padding-right: 10%;
+     
+  }
+
+  .contact-button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    cursor: pointer;
+    width: 50%;
+    text-decoration: bold;
+    margin-left: 25%; 
+}
+
+.contact-button:hover {
+    background-color: rgb(224, 224, 224);
+}
+
+.aboutPosition {
+    color: white; 
+    font-weight: bold;
+}
+  
