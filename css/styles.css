@@ -4,6 +4,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+h1 {
+    font-family: 'Poppins', sans-serif;
+}
+
 .spacer {
     padding: 3%;
 }
@@ -49,7 +53,6 @@ body {
 }
 
 .title {
-    font-family: 'Poppins', sans-serif;
     color: black;
     text-align: center;
 }
@@ -114,8 +117,37 @@ body {
     padding: 1%;
 }
 
+#cta {
+    background-color: #417D7A;
+    color: white;
+    text-align: center;
+    padding: 8% 7%;
+}
+
+.startNow {
+    font-size: 3.5rem;
+    padding-bottom: 3%;
+}
+
+.bookNow {
+    padding: 1.2% 2.6%;
+    font-size: 1.3rem;
+}
+
 #footer {
-    height: 300px;
+    text-align: center;
+    margin-top: 3%;
+}
+
+.footerIcon {
+    font-size: 1.3rem;
+    padding: 1% 1% 1.4% 1%;
+}
+
+.footerText {
+    color: grey;
+    font-size: 1.2rem;
+    margin-bottom: 60px;
 }
 
 /* About Page */
