@@ -171,12 +171,27 @@ h1 {
     height: 800px;
 }
 
+#accomodationDescriptions h2 {
+    font-weight: bold;
+}
+
 .generalDescription {
     text-align: center;
     padding: 6% 15%;
 }
 
 .description {
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+}
+
+.beds {
+    color: grey;
+    font-size: 1.5rem;
+    padding-top: 2%;
+}
+
+.darkBeds {
     font-size: 1.5rem;
     padding-top: 2%;
 }
@@ -187,7 +202,17 @@ h1 {
 }
 
 .sideDescription {
-    padding: 6% 3%;
+    padding: 6% 5%;
+}
+
+.doubleRoom {
+    background-color: #1D5C63;
+    color: white;
+}
+
+.masterSuite {
+    background-color: #1A3C40;
+    color: white;
 }
 
 /* About Page */
