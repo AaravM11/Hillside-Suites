@@ -141,8 +141,10 @@ h1 {
 
 .signUpEmail {
     padding: 8px;
-    margin: 1%;
-    width: 300px;
+    width: 30%;
+    min-width: 300px;
+    margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 #footer {
@@ -176,6 +178,16 @@ h1 {
 
 .description {
     font-size: 1.5rem;
+    padding-top: 2%;
+}
+
+.descriptionPic {
+    padding: 6%;
+    width: 100%;
+}
+
+.sideDescription {
+    padding: 6% 3%;
 }
 
 /* About Page */
