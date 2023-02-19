@@ -35,7 +35,7 @@ h1 {
 
 .nav-item {
     font-size: 1.2rem;
-    padding: 0 15% 0 0;
+    padding: 0 6% 0 0;
 }
 
 .nav-link {
@@ -159,6 +159,23 @@ h1 {
     color: grey;
     font-size: 1.2rem;
     margin-bottom: 60px;
+}
+
+/* Accomodations Page */
+#accomodationMain {
+    background-image: url(../images/accomodation2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 800px;
+}
+
+.generalDescription {
+    text-align: center;
+    padding: 6% 15%;
+}
+
+.description {
+    font-size: 1.5rem;
 }
 
 /* About Page */
