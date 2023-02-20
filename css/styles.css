@@ -266,3 +266,19 @@ h1 {
 .contactOptions {
     display: inline-block;
 }
+
+/* Amenities Page */ 
+
+.amenities {
+    margin: 10% 20% 5% 20%;
+    text-align: center;
+    max-width: 550px;
+    max-height: 650px; 
+    background-color: white;
+    box-shadow: 10px 10px 10px 10px #888888;
+}    
+
+.amenities-body {
+    padding-top: 5%; 
+    padding-bottom: 5%; 
+}
