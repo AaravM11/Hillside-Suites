@@ -14,6 +14,9 @@
         <!-- CSS Stylesheets -->
         <link rel="stylesheet" href="css/styles.css">
 
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/9f9f6da6a2.js" crossorigin="anonymous"></script>
+
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,69 +30,108 @@
     </head>
 
     <body>
-        <section id="title">
+        <section id="titleAbout">
             <div class="container-fluid">
+
                 <!-- nav bar -->
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="">Hillside Suites</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler01" aria-controls="navbarToggler01" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarToggler01">
-                      <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                          <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="">About</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="reserve.html">Reserve</a>
-                        </li>
-                      </ul>
-                    </div>
-                </nav>
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                  <a class="navbar-brand" href="">Hillside Suites</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler01" aria-controls="navbarToggler01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarToggler01">
+                    <ul class="navbar-nav ms-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="accomodations.html">Accomodations</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link reserveNav btn btn-secondary btn-sm" href="reserve.html">Reserve</a>
+                      </li>
+                    </ul>
+                  </div>
+              </nav>
+
+                <!-- Title -->
+                <div class="row">
+                  <div class="col-lg-5">
+                    <h1 class="titleName">About Us</h1>
+                  </div>
+                </div>
+            </div>    
           </section>
+
+          <div class="spacer"></div>
+
           <section id="about">     
+
+            <div class="mission row">
+              <div class>
+                <h1 class = "missionTitle">Our Mission</h1>
+                <p class = "missionText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </div>
+
             <div class = "aboutHeader">
               <h1 class = "aboutTitle">Meet the Managers</h1>
             </div>   
+
             <div class="row">
-              <div class="column">
-                <div class = "card">
-                  <img class = "ourImage" src="images/filler.jpg" alt="Aarav" style="width:100%">
-                  <h2>Aarav Mulinti</h2>
-                  <p class="aboutPosition">Co-Founder</p>
-                  <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                  <p>aarav.mulinti@gmail.com</p>
-                  <p><button class="contact-button">Contact</button></p>
+              <div class="col-lg-4">
+                <div class="aboutCards card">
+                  <img src="images/filler.jpg" class="card-img-top" alt="Aarav">
+                  <div class="card-body">
+                    <h5 class="card-title">Aarav Mulinti</h5>
+                    <p class="card-text">Some text that describes me lorem ipsum ipsum lorem.</p>
+                    <a href="#" class="btn btn-dark">Contact</a>
+                  </div>
                 </div>
               </div>
-              <div class="column">
-                <div class = "card">
-                  <img class = "ourImage" src="images/filler.jpg" alt="Havish" style="width:100%">
-                  <h2>Havish Boda</h2>
-                  <p class="aboutPosition">Co-Founder</p>
-                  <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                  <p>havish.boda2@gmail.com</p>
-                  <p><button class="contact-button">Contact</button></p>
+              <div class="col-lg-4 col-md-6">
+                <div class="aboutCards card">
+                  <img src="images/filler.jpg" class="card-img-top" alt="Havish">
+                  <div class="card-body">
+                    <h5 class="card-title">Havish Boda</h5>
+                    <p class="card-text">Some text that describes me lorem ipsum ipsum lorem.</p>
+                    <a href="#" class="btn btn-dark">Contact</a>
+                  </div>
                 </div>
               </div>
-              <div class="column">
-                <div class = "card">
-                  <img class = "ourImage" src="images/filler.jpg" alt="Ryan" style="width:100%">
-                  <h2>Ryan Sun</h2>
-                  <p class="aboutPosition">Co-Founder</p>
-                  <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                  <p>ryan.sun@gmail.com</p>
-                  <p><button class="contact-button">Contact</button></p>
+              <div class="col-lg-4 col-md-6">
+                <div class="aboutCards card">
+                  <img src="images/filler.jpg" class="card-img-top" alt="Ryan">
+                  <div class="card-body">
+                    <h5 class="card-title">Ryan Sun</h5>
+                    <p class="card-text">Some text that describes me lorem ipsum ipsum lorem.</p>
+                    <a href="#" class="btn btn-dark">Contact</a>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class = "mission">
-              <h1 class = "missionTitle">Our Mission</h1>
-              <h2 class = "missionText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h2>
+            
+          </section>
+
+          <div class="spacer"></div>
+
+          <section id="contactUs">
+            <h1 class="contactTitle">Contact Us</h1>
+            <div class="contactDiv row justify-content-center">
+              <div class="col-lg-4">
+                <p class="contactOptions"><span class="fa-solid fa-location-dot"></span> 13 Horseneck Road Montville, NJ 07045</p>
+              </div>
+              <div class="col-lg-4">
+                <p class="contactOptions"><span class="fa-solid fa-phone"></span> (999)-999-9999</p>
+              </div>
+              <div class="col-lg-4">
+                <p class="contactOptions"><span class="footerIcon fa-solid fa-envelope"></span> hillsidesuites@gmail.com</p>
+              </div>
             </div>
+
           </section>
           <footer id="footer">
           
