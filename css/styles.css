@@ -282,3 +282,44 @@ h1 {
     padding-top: 5%; 
     padding-bottom: 5%; 
 }
+
+/* Reserve Page */
+
+#titleReserve {
+    background-image: url(../images/bookNow.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 800px;
+}
+
+#reserveForm {
+    padding: 7% 10%;
+}
+
+.formCount {
+    padding: 1%;
+}
+
+.viewRates {
+    width: 25%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+#reserveForm h2 {
+    font-weight: bold;
+    padding-bottom: 1%;
+}
+
+.roomCard {
+    padding: 3% 5%;
+}
+
+small {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#reserveForm h3 {
+    font-weight: bold;
+}
