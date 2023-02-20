@@ -332,14 +332,4 @@ small {
 
 #reserveForm h3 {
     font-weight: bold;
-    padding-bottom: 3%;
-}
-
-.cardPic {
-    object-fit: cover;
-    min-height: 422.53px;
-}
-
-.reserveCard {
-    margin: 5% 0;
 }
