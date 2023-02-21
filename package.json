@@ -1,0 +1,24 @@
+{
+  "name": "hillsidesuites",
+  "version": "1.0.0",
+  "description": "Collects email addresses and form info to book rooms",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AaravM11/HillsideSuites.git"
+  },
+  "author": "Ryan Sun Aarav Mulinti and Havish Boda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AaravM11/HillsideSuites/issues"
+  },
+  "homepage": "https://github.com/AaravM11/HillsideSuites#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "request": "^2.88.2"
+  }
+}
