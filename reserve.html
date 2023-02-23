@@ -29,29 +29,28 @@
         <section id="titleReserve">
             <div class="container-fluid">
 
-                <!-- nav bar -->
-                <nav class="navbar navbar-expand-lg navbar-dark">
-                  <a class="navbar-brand" href="">Hillside Suites</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler01" aria-controls="navbarToggler01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarToggler01">
-                    <ul class="navbar-nav ms-auto">
-                      <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="accomodations.html">Accomodations</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link reserveNav btn btn-secondary btn-sm" href="reserve.html">Reserve</a>
-                      </li>
-                      
-                    </ul>
-                  </div>
+              <!-- nav bar -->
+              <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="">Hillside Suites</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler01" aria-controls="navbarToggler01" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggler01">
+                  <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="accomodations">Accomodations</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="about">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link reserveNav btn btn-secondary btn-sm" href="reserve">Reserve</a>
+                    </li>
+                  </ul>
+                </div>
               </nav>
               
               <!-- Title -->
@@ -67,7 +66,7 @@
 
         <section id="reserveForm">
 
-          <form action="/" class="row formSection needs-validation" method="POST" novalidate>
+          <form action="/reserve" class="row formSection needs-validation" method="post" novalidate>
             <div class="col-md-6">
               <label class="form-label">Arrival</label>
               <input name="arrivalDate" type="date" class="form-control" required>
@@ -77,8 +76,8 @@
               <input name="departureDate" type="date" class="form-control" required>
             </div>
             <div class="formCount col-md-4">
-              <select class="form-select" required>
-                <option selected disabled value="">Rooms</option>
+              <select name="rooms" class="form-select" required>
+                <option selected disabled>Rooms</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -88,7 +87,7 @@
               </div>
             </div>
             <div class="formCount col-md-4">
-              <select class="form-select" required>
+              <select name="adults" class="form-select" required>
                 <option selected disabled value="">Adults</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -104,7 +103,7 @@
               </div>
             </div>
             <div class="formCount col-md-4" required>
-              <select class="form-select">
+              <select name="children" class="form-select">
                 <option selected disabled value="">Children</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -208,5 +207,9 @@
           <p class="footerText">Hillside Suites</p>
 
         </footer>
+
+        <!-- JQuery and Javascript scripts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="app.js" charset="utf-8"></script>
     </body>
 </html>
