@@ -320,6 +320,11 @@ h1 {
     margin: 4% 0;
 }
 
+.cardPic {
+    min-height: 422.53px;
+    object-fit: cover;
+}
+
 #reserveForm h2 {
     font-weight: bold;
     padding-bottom: 1%;
