@@ -41,9 +41,9 @@ const roomsDescriptionSchema = {
     image: String
 };
 
-const Room = mongoose.model("Room", roomsDescriptionSchema);
+const RoomType = mongoose.model("RoomType", roomsDescriptionSchema);
 
-const room1 = new Room({
+const singleRoom = new RoomType({
     type: "Single Room",
     doubles: 0,
     queens: 1,
@@ -53,7 +53,7 @@ const room1 = new Room({
     image: "images/singleRoom.jpg"
 });
 
-const room2 = new Room({
+const doubleRoom = new RoomType({
     type: "Double Room",
     doubles: 2,
     queens: 0,
@@ -63,7 +63,7 @@ const room2 = new Room({
     image: "images/doubleRoom.jpg"
 });
 
-const room3 = new Room({
+const tripleRoom = new RoomType({
     type: "Triple Room",
     doubles: 2,
     queens: 1,
@@ -73,7 +73,7 @@ const room3 = new Room({
     image: "images/tripleRoom.jpg"
 });
 
-const room4 = new Room({
+const masterSuite = new RoomType({
     type: "Master Suite",
     doubles: 0,
     queens: 2,
@@ -83,16 +83,85 @@ const room4 = new Room({
     image: "images/accomodation3.jpg"
 });
 
-const defaultRooms = [room1, room2, room3, room4];
+const defaultRooms = [singleRoom, doubleRoom, tripleRoom, masterSuite];
+
+//Available rooms layout in database
+const roomsSchema = {
+    type: String,
+    roomNumber: Number,
+    booked: Boolean,
+    dates: [{
+        startDate: String,
+        endDate: String
+    }]
+}
+
+const Room = mongoose.model("Room", roomsSchema);
+
+var date = new Date().toISOString();
+
+const allRooms = [];
+
+for (let i = 0; i < 10; i++) {
+    const singleRoom = new Room({
+        type: "Single Room",
+        roomNumber: i + 1,
+        booked: false,
+        dates: [{
+            startDate: date,
+            endDate: date
+        }]
+    });
+    allRooms.push(singleRoom);
+}
+
+for (let i = 10; i < 20; i++) {
+    const doubleRoom = new Room({
+        type: "Double Room",
+        roomNumber: i + 1,
+        booked: false,
+        dates: [{
+            startDate: date,
+            endDate: date
+        }]
+    });
+    allRooms.push(doubleRoom);
+}
+
+for (let i = 20; i < 30; i++) {
+    const tripleRoom = new Room({
+        type: "Triple Room",
+        roomNumber: i + 1,
+        booked: false,
+        dates: [{
+            startDate: date,
+            endDate: date
+        }]
+    });
+    allRooms.push(tripleRoom);
+}
+
+for (let i = 30; i < 35; i++) {
+    const masterSuite = new Room({
+        type: "Master Suite",
+        roomNumber: i + 1,
+        booked: false,
+        dates: [{
+            startDate: date,
+            endDate: date
+        }]
+    });
+    allRooms.push(masterSuite);
+}
 
 //Website Pages
 app.get("/" || "/home", function(req, res){
     res.sendFile(__dirname + "/index.html");
 
     //Only adds room types to DB once
-    Room.find({}, function(error, foundRooms){
+    RoomType.find({}, function(error, foundRooms){
         if (foundRooms.length === 0) {
-            Room.insertMany(defaultRooms, function(error){
+            RoomType.insertMany(defaultRooms, function(error){
                 if (error) {
                     console.log(err);
                 } else {
@@ -100,7 +169,20 @@ app.get("/" || "/home", function(req, res){
                 }
             });
         }
-    })
+    });
+
+    //Only adds all rooms to DB once
+    Room.find({}, function(error, foundRooms){
+        if (foundRooms.length === 0) {
+            Room.insertMany(allRooms, function(error){
+                if (error) {
+                    console.log(err);
+                } else {
+                    console.log("Successfully saved all rooms to DB.");
+                }
+            });
+        }
+    });
 });
 
 app.get("/accomodations", function(req, res){
@@ -111,11 +193,20 @@ app.get("/about", function(req, res){
     res.sendFile(__dirname + "/about.html");
 });
 
+var bookingError = 0;
+
 app.get("/reserve" || "/book" || "/booknow", function(req, res){
 
     // Uses database info to fill the reserve page
-    Room.find({}, function(error, availableRooms) {
-        res.render("reserve", {availableRooms: availableRooms});
+    RoomType.find({}, function(error, availableRooms) {
+        res.render("reserve", {bookingError, availableRooms: availableRooms});
+    });
+
+    const date = new Date();
+    Room.updateMany({ booked: false }, { dates: [{ startDate: date, endDate: date }] }, function(error) {
+        if (error) {
+            console.log(error);
+        }
     });
 
 });
@@ -162,8 +253,104 @@ app.post("/reserve", function(req, res){
     const rooms = req.body.rooms;
     const adults = req.body.adults;
     const children = req.body.children;
+    const totalPeople = parseInt(adults) + parseInt(children);
 
+    console.log(new Date(arrivalDate).toISOString());
+    console.log(new Date(departureDate).toISOString());
+    
+    // const start = new Date("2023-03-03T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
+    // const end = new Date("2023-03-07T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
 
+    // Room.updateOne({ roomNumber: 1 }, { booked: true, dates: [{ startDate: start, endDate: end }] }, function(error) {
+    // });
+
+    // Room.deleteMany({}, function(error) {
+    // });
+
+    if (totalPeople > 6) {
+        bookingError = 1;
+        res.redirect("/reserve");
+    } else {
+        bookingError = 0;
+        if (totalPeople <= 2) {
+
+            Room.find({ type: "Single Room" }, function(error, rooms) {
+                if (error) {
+                    console.log(error);
+                } else {
+
+                    //Checks each room until it finds one that is vacant
+                    for (let i = 0; i < rooms.length; i++) {
+                        if (rooms[i].booked === false) {
+                            console.log("found");
+                            console.log(i);
+                            break;
+                        }    
+                        //Checks if a start and end date is compatible with a booked room
+                        else {
+                            var temp = 0;
+                            for (let j = 0; j < rooms[i].dates.length; j++) {
+
+                                const roomStartDate = new Date(rooms[i].dates[j].startDate);
+                                const roomEndDate = new Date(rooms[i].dates[j].endDate);
+                                const userStartDate = new Date(arrivalDate);
+                                const userEndDate = new Date(departureDate);
+
+                                // if (roomStartDate.getFullYear() > userEndDate.getFullYear() || roomStartDate.getMonth() > userEndDate.getMonth() || (roomStartDate.getDate() >= userEndDate.getDate() && roomStartDate.getMonth() === userEndDate.getMonth())) {
+                                //     console.log("found2");
+                                //     console.log(i);
+                                //     console.log(j);
+                                //     temp = 1;
+                                //     break;
+                                // } else if (roomEndDate.getFullYear() < userStartDate.getFullYear() || roomEndDate.getMonth() < userStartDate.getMonth() || (roomEndDate.getDate() <= userStartDate.getDate() && roomEndDate.getMonth() === userStartDate.getMonth())) {
+                                //     console.log("found3");
+                                //     console.log(i);
+                                //     console.log(j);
+                                //     temp = 1;
+                                //     break;
+                                // }
+
+                                // console.log(new Date(rooms[i].dates[j].startDate).getTime());
+                                // console.log(new Date(rooms[i].dates[j].startDate).toISOString());
+                                // console.log(new Date(departureDate).getTime());
+                                // console.log(new Date(departureDate).toISOString());
+
+                                if (roomStartDate.getDate() === userEndDate.getDate()) {
+                                    
+                                }
+
+                                if (roomStartDate.getTime() > userEndDate.getTime()) {
+                                    console.log("found2");
+                                    console.log(i);
+                                    console.log(j);                                    
+                                    temp = 1;
+                                    break;
+
+                                } else if (roomEndDate.getTime() < userStartDate.getTime()) {
+                                    console.log("found3");
+                                    console.log(i);
+                                    console.log(j);
+                                    temp = 1
+                                    break;
+                                }
+
+                            }
+
+                            if (temp === 1) {
+                                break;
+                            }
+                        }
+                        
+                    }
+                }
+            });
+    
+        } else if (totalPeople <= 4) {
+    
+        } else {
+    
+        }
+    }
 
 })
 

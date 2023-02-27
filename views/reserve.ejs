@@ -70,14 +70,20 @@
             <div class="col-md-6">
               <label class="form-label">Arrival</label>
               <input name="arrivalDate" type="date" class="form-control" required>
+              <div class="invalid-feedback">
+                Please select a valid arrival date.
+              </div>
             </div>
             <div class="col-md-6">
               <label class="form-label">Departure</label>
               <input name="departureDate" type="date" class="form-control" required>
+              <div class="invalid-feedback">
+                Please select a valid departure date.
+              </div>
             </div>
             <div class="formCount col-md-4">
               <select name="rooms" class="form-select" required>
-                <option selected disabled>Rooms</option>
+                <option selected disabled value="">Rooms</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -95,24 +101,20 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
                 <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
               </select>
               <div class="invalid-feedback">
                 Please select a valid number of adults.
               </div>
             </div>
-            <div class="formCount col-md-4" required>
-              <select name="children" class="form-select">
+            <div class="formCount col-md-4">
+              <select name="children" class="form-select" required>
                 <option selected disabled value="">Children</option>
+                <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
               </select>
               <div class="invalid-feedback">
                 Please select a valid number of children.
@@ -126,6 +128,10 @@
           </form>
 
           <div class="spacer"></div>
+
+          <% if (bookingError === 1) { %>
+              
+          <% } %>
 
           <!-- Populates the page with all available and applicable rooms -->
           <% for (var i = 0; i < availableRooms.length; i++) { %>
@@ -238,6 +244,34 @@
           <p class="footerText">Hillside Suites</p>
 
         </footer>
+        <script>
+          // //Fetch all the forms to apply custom Bootstrap validation styles to
+          // const forms = document.querySelectorAll('.needs-validation')
 
+          // //Loop over them and prevent submission
+          // Array.from(forms).forEach(form => {
+          //   form.addEventListener('submit', event => {
+          //     if (!form.checkValidity()) {
+          //       event.preventDefault()
+          //       event.stopPropagation()
+          //     }
+
+          //     // // Prevent submission if arrivalDate is current day or earlier
+          //     // const date = new Date();
+          //     // if (arrivalDate <= date) {
+          //     //   arrivalDate.preventDefault()
+          //     //   arrivalDate.stopPropagation()
+          //     // }
+
+          //     // //Prevent submission if departureDate is not after arrivalDate
+          //     // if (departureDate <= arrivalDate) {
+          //     //   departureDate.preventDefault()
+          //     //   departureDate.stopPropagation()
+          //     // }
+
+          //     form.classList.add('was-validated')
+          //   }, false)
+          // })
+        </script>
     </body>
 </html>
