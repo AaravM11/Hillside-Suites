@@ -254,9 +254,6 @@ app.post("/reserve", function(req, res){
     const adults = req.body.adults;
     const children = req.body.children;
     const totalPeople = parseInt(adults) + parseInt(children);
-
-    console.log(new Date(arrivalDate).toISOString());
-    console.log(new Date(departureDate).toISOString());
     
     // const start = new Date("2023-03-03T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
     // const end = new Date("2023-03-07T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
@@ -272,87 +269,199 @@ app.post("/reserve", function(req, res){
         res.redirect("/reserve");
     } else {
         bookingError = 0;
-        if (totalPeople <= 2) {
+        var roomsFilled = 0;
 
-            Room.find({ type: "Single Room" }, function(error, rooms) {
-                if (error) {
-                    console.log(error);
-                } else {
+        for (let k = 0; k < rooms; k++) {
+            
+            if (totalPeople <= 2) {
 
-                    //Checks each room until it finds one that is vacant
-                    for (let i = 0; i < rooms.length; i++) {
-                        if (rooms[i].booked === false) {
-                            console.log("found");
-                            console.log(i);
-                            break;
-                        }    
-                        //Checks if a start and end date is compatible with a booked room
-                        else {
-                            var temp = 0;
-                            for (let j = 0; j < rooms[i].dates.length; j++) {
-
-                                const roomStartDate = new Date(rooms[i].dates[j].startDate);
-                                const roomEndDate = new Date(rooms[i].dates[j].endDate);
-                                const userStartDate = new Date(arrivalDate);
-                                const userEndDate = new Date(departureDate);
-
-                                // if (roomStartDate.getFullYear() > userEndDate.getFullYear() || roomStartDate.getMonth() > userEndDate.getMonth() || (roomStartDate.getDate() >= userEndDate.getDate() && roomStartDate.getMonth() === userEndDate.getMonth())) {
-                                //     console.log("found2");
-                                //     console.log(i);
-                                //     console.log(j);
-                                //     temp = 1;
-                                //     break;
-                                // } else if (roomEndDate.getFullYear() < userStartDate.getFullYear() || roomEndDate.getMonth() < userStartDate.getMonth() || (roomEndDate.getDate() <= userStartDate.getDate() && roomEndDate.getMonth() === userStartDate.getMonth())) {
-                                //     console.log("found3");
-                                //     console.log(i);
-                                //     console.log(j);
-                                //     temp = 1;
-                                //     break;
-                                // }
-
-                                // console.log(new Date(rooms[i].dates[j].startDate).getTime());
-                                // console.log(new Date(rooms[i].dates[j].startDate).toISOString());
-                                // console.log(new Date(departureDate).getTime());
-                                // console.log(new Date(departureDate).toISOString());
-
-                                if (roomStartDate.getDate() === userEndDate.getDate()) {
-                                    
-                                }
-
-                                if (roomStartDate.getTime() > userEndDate.getTime()) {
-                                    console.log("found2");
-                                    console.log(i);
-                                    console.log(j);                                    
-                                    temp = 1;
-                                    break;
-
-                                } else if (roomEndDate.getTime() < userStartDate.getTime()) {
-                                    console.log("found3");
-                                    console.log(i);
-                                    console.log(j);
-                                    temp = 1
-                                    break;
-                                }
-
-                            }
-
-                            if (temp === 1) {
+                Room.find({ type: "Single Room" }, function(error, rooms) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+    
+                        //Checks each room until it finds one that is vacant
+                        for (let i = 0; i < rooms.length; i++) {
+                            if (rooms[i].booked === false) {
+                                console.log("found open slot");
+                                console.log(i);
+                                roomsFilled++;
                                 break;
+                            }    
+                            //Checks if a start and end date is compatible with a booked room
+                            else {
+                                var breakLoop = 0;
+                                for (let j = 0; j < rooms[i].dates.length; j++) {
+    
+                                    const roomStartDate = new Date(rooms[i].dates[j].startDate);
+                                    const roomEndDate = new Date(rooms[i].dates[j].endDate);
+                                    const userStartDate = new Date(arrivalDate);
+                                    const userEndDate = new Date(departureDate);
+    
+                                    // if (roomStartDate.getFullYear() > userEndDate.getFullYear() || roomStartDate.getMonth() > userEndDate.getMonth() || (roomStartDate.getDate() >= userEndDate.getDate() && roomStartDate.getMonth() === userEndDate.getMonth())) {
+                                    //     console.log("found2");
+                                    //     console.log(i);
+                                    //     console.log(j);
+                                    //     temp = 1;
+                                    //     break;
+                                    // } else if (roomEndDate.getFullYear() < userStartDate.getFullYear() || roomEndDate.getMonth() < userStartDate.getMonth() || (roomEndDate.getDate() <= userStartDate.getDate() && roomEndDate.getMonth() === userStartDate.getMonth())) {
+                                    //     console.log("found3");
+                                    //     console.log(i);
+                                    //     console.log(j);
+                                    //     temp = 1;
+                                    //     break;
+                                    // }
+    
+                                    // console.log(new Date(rooms[i].dates[j].startDate).getTime());
+                                    // console.log(new Date(rooms[i].dates[j].startDate).toISOString());
+                                    // console.log(new Date(departureDate).getTime());
+                                    // console.log(new Date(departureDate).toISOString());
+    
+                                    // Bug to fix: when picking same arrival day as hotel departure day the site won't let you book
+    
+                                    if (roomStartDate.getTime() > userEndDate.getTime()) {
+                                        console.log("found slot before");
+                                        console.log(i);
+                                        console.log(j);                                    
+                                        breakLoop = 1;
+                                        roomsFilled++;
+                                        break;
+    
+                                    } else if (roomEndDate.getTime() < userStartDate.getTime()) {
+                                        console.log("found slot after");
+                                        console.log(i);
+                                        console.log(j);
+                                        breakLoop = 1
+                                        roomsFilled++;
+                                        break;
+                                    }
+    
+                                }
+    
+                                if (breakLoop === 1) {
+                                    break;
+                                }
                             }
+                            
                         }
-                        
                     }
-                }
-            });
+                });
+        
+            } else if (totalPeople <= 4) {
+                Room.find({ type: "Double Room" }, function(error, rooms) {
+                    if (error) {
+                        console.log(error);
+                    } else {
     
-        } else if (totalPeople <= 4) {
+                        //Checks each room until it finds one that is vacant
+                        for (let i = 0; i < rooms.length; i++) {
+                            if (rooms[i].booked === false) {
+                                console.log("found open slot");
+                                console.log(i);
+                                roomsFilled++;
+                                break;
+                            }    
+                            //Checks if a start and end date is compatible with a booked room
+                            else {
+                                var breakLoop = 0;
+                                for (let j = 0; j < rooms[i].dates.length; j++) {
     
-        } else {
+                                    const roomStartDate = new Date(rooms[i].dates[j].startDate);
+                                    const roomEndDate = new Date(rooms[i].dates[j].endDate);
+                                    const userStartDate = new Date(arrivalDate);
+                                    const userEndDate = new Date(departureDate);
+
+                                    if (roomStartDate.getTime() > userEndDate.getTime()) {
+                                        console.log("found slot before");
+                                        console.log(i);
+                                        console.log(j);                                    
+                                        breakLoop = 1;
+                                        roomsFilled++;
+                                        break;
     
+                                    } else if (roomEndDate.getTime() < userStartDate.getTime()) {
+                                        console.log("found slot after");
+                                        console.log(i);
+                                        console.log(j);
+                                        breakLoop = 1
+                                        roomsFilled++;
+                                        break;
+                                    }    
+                                }
+    
+                                if (breakLoop === 1) {
+                                    break;
+                                }
+                            }                            
+                        }
+                    }
+                });
+            } else {
+                Room.find({ type: [ "Triple Room", "Master Suite" ] }, function(error, rooms) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+    
+                        //Checks each room until it finds one that is vacant
+                        for (let i = 0; i < rooms.length; i++) {
+                            if (rooms[i].booked === false) {
+                                console.log("found open slot");
+                                console.log(i);
+                                roomsFilled++;
+                                break;
+                            }    
+                            //Checks if a start and end date is compatible with a booked room
+                            else {
+                                var breakLoop = 0;
+                                for (let j = 0; j < rooms[i].dates.length; j++) {
+    
+                                    const roomStartDate = new Date(rooms[i].dates[j].startDate);
+                                    const roomEndDate = new Date(rooms[i].dates[j].endDate);
+                                    const userStartDate = new Date(arrivalDate);
+                                    const userEndDate = new Date(departureDate);
+
+                                    if (roomStartDate.getTime() > userEndDate.getTime()) {
+                                        console.log("found slot before");
+                                        console.log(i);
+                                        console.log(j);                                    
+                                        breakLoop = 1;
+                                        roomsFilled++;
+                                        break;
+    
+                                    } else if (roomEndDate.getTime() < userStartDate.getTime()) {
+                                        console.log("found slot after");
+                                        console.log(i);
+                                        console.log(j);
+                                        breakLoop = 1
+                                        roomsFilled++;
+                                        break;
+                                    }    
+                                }
+    
+                                if (breakLoop === 1) {
+                                    break;
+                                }
+                            }                            
+                        }
+                    }
+                });
+            }
+
         }
+
+        //Sends an error if not all rooms were filled
+        if (roomsFilled < parseInt(rooms)) {
+            bookingError = 2;
+            console.log("Not all rooms filled");
+            console.log(roomsFilled);
+        } else {
+            console.log("Rooms successfully filled!");
+            console.log(roomsFilled);
+        }
+        
     }
 
-})
+});
 
 //Allows app to run locally and on Heroku
 app.listen(process.env.PORT || 3000, function() {
