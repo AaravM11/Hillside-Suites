@@ -38,10 +38,12 @@ const roomsDescriptionSchema = {
     kings: Number,
     description: String,
     price: Number,
-    image: String
+    image: String,
+    rooms: Number
 };
 
 const RoomType = mongoose.model("RoomType", roomsDescriptionSchema);
+var rooms = 0;
 
 const singleRoom = new RoomType({
     type: "Single Room",
@@ -50,7 +52,8 @@ const singleRoom = new RoomType({
     kings: 0,
     description: "Enjoy your stay in one of our single rooms at Hillside Suites, with a queen bed, a TV, a couch, and a desk.",
     price: 205, 
-    image: "images/singleRoom.jpg"
+    image: "images/singleRoom.jpg",
+    rooms: rooms
 });
 
 const doubleRoom = new RoomType({
@@ -60,7 +63,8 @@ const doubleRoom = new RoomType({
     kings: 0,
     description: "Enjoy your stay in one of our double rooms at Hillside Suites, with two double beds, a TV, a couch, and a desk.",
     price: 235,
-    image: "images/doubleRoom.jpg"
+    image: "images/doubleRoom.jpg",
+    rooms: rooms
 });
 
 const tripleRoom = new RoomType({
@@ -70,7 +74,8 @@ const tripleRoom = new RoomType({
     kings: 0,
     description: "Enjoy your stay in one of our triple rooms at Hillside Suites, with one queen bed, two double beds, a TV, a couch, and a desk.",
     price: 265,
-    image: "images/tripleRoom.jpg"
+    image: "images/tripleRoom.jpg",
+    rooms: rooms
 });
 
 const masterSuite = new RoomType({
@@ -80,7 +85,8 @@ const masterSuite = new RoomType({
     kings: 1,
     description: "Enjoy your stay in one of our master suites at Hillside Suites, with one king bed, two queen beds, two TVs, two couches, a desk, and a large bathtub.",
     price: 295,
-    image: "images/accomodation3.jpg"
+    image: "images/accomodation3.jpg",
+    rooms: rooms
 });
 
 const defaultRooms = [singleRoom, doubleRoom, tripleRoom, masterSuite];
@@ -249,7 +255,7 @@ app.post("/", function(req, res){
 
 });
 
-const roomsFilled = [];
+var roomsFilled = [];
 
 function alreadyChecked(roomNumber) {
     for (let m = 0; m < roomsFilled.length; m++) {
@@ -280,26 +286,63 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                 }    
                 //Checks if a start and end date is compatible with a booked room
                 else {
+
+                    // var breakLoop = 0;
+                    // for (let j = 0; j < rooms[i].dates.length; j++) {
+
+                    //     const roomStartDate = new Date(rooms[i].dates[j].startDate);
+                    //     const roomEndDate = new Date(rooms[i].dates[j].endDate);
+                    //     const userStartDate = new Date(arrivalDate);
+                    //     const userEndDate = new Date(departureDate);
+
+
+                    // }    
+                    
+                    // Room.find({ roomNumber: rooms[i].roomNumber, startDate: { $gte: rooms[i].startDate, $lte: rooms[i].endDate }}, function(error, workingDates) {
+                    //     console.log(workingDates.roomNumber);
+                    // });
+                    // Room.find({ roomNumber: rooms[i].roomNumber, endDate: { $gte: rooms[i].startDate, $lte: rooms[i].endDate } }, function(error, workingDates) {
+                    //     console.log(workingDates.roomNumber);
+                    // });
+
                     var breakLoop = 0;
+
                     for (let j = 0; j < rooms[i].dates.length; j++) {
 
-                        const roomStartDate = new Date(rooms[i].dates[j].startDate);
-                        const roomEndDate = new Date(rooms[i].dates[j].endDate);
-                        const userStartDate = new Date(arrivalDate);
-                        const userEndDate = new Date(departureDate);
+                        const testRoomStartDate = new Date(rooms[i].dates[j].startDate);
+                        const roomStartDate = new Date(Date.UTC(testRoomStartDate.getUTCFullYear(), testRoomStartDate.getUTCMonth(), testRoomStartDate.getUTCDate()));
+                        const testRoomEndDate = new Date(rooms[i].dates[j].endDate);
+                        const roomEndDate = new Date(Date.UTC(testRoomEndDate.getUTCFullYear(), testRoomEndDate.getUTCMonth(), testRoomEndDate.getUTCDate()));
+                        const testUserStartDate = new Date(arrivalDate);
+                        const userStartDate = new Date(Date.UTC(testUserStartDate.getUTCFullYear(), testUserStartDate.getUTCMonth(), testUserStartDate.getUTCDate()));
+                        const testUserEndDate = new Date(departureDate);
+                        const userEndDate = new Date(Date.UTC(testUserEndDate.getUTCFullYear(), testUserEndDate.getUTCMonth(), testUserEndDate.getUTCDate()));
 
-                        if (roomStartDate.getTime() > userEndDate.getTime()) {
+                        console.log(roomStartDate);
+                        console.log(roomEndDate);
+                        console.log(userStartDate);
+                        console.log(userEndDate);
+
+                        if (roomStartDate.getTime() >= userEndDate.getTime()) {
 
                             var found = 1;
 
                             for (let l = 0; l < rooms[i].dates.length; l++) {
+
+                                const testOtherRoomStartDate = new Date(rooms[i].dates[l].startDate);
+                                const otherRoomStartDate = new Date(Date.UTC(testOtherRoomStartDate.getUTCFullYear(), testOtherRoomStartDate.getUTCMonth(), testOtherRoomStartDate.getUTCDate()));
+                                const testOtherRoomEndDate = new Date(rooms[i].dates[l].endDate);
+                                const otherRoomEndDate = new Date(Date.UTC(testOtherRoomEndDate.getUTCFullYear(), testOtherRoomEndDate.getUTCMonth(), testOtherRoomEndDate.getUTCDate()));
+
                                 if (l != j) {
-                                    if (rooms[i].dates[l].endDate.getTime() > roomStartDate.getTime()) {
+                                    if (otherRoomStartDate.getTime() <= roomStartDate.getTime() && roomStartDate.getTime() <= otherRoomEndDate.getTime()) {
                                         found = 0;
-                                    } else if (rooms[i].dates[l].startDate.getTime() < roomEndDate.getTime()) {
+                                    }
+                                    else if (otherRoomStartDate.getTime() <= roomEndDate.getTime() && roomEndDate.getTime() <= otherRoomEndDate.getTime()) {
                                         found = 0;
                                     }
                                 }
+
                             }
 
                             if (found = 1 && !(alreadyChecked(rooms[i].roomNumber))) {
@@ -308,17 +351,24 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                                 breakLoop = 1;
                                 roomsFilled.push(rooms[i].roomNumber);
                                 break;
-                            }
+                            }   
 
-                        } else if (roomEndDate.getTime() < userStartDate.getTime()) {
+                        }
+                        else if (roomEndDate.getTime() <= userStartDate.getTime()) {
 
                             var found = 1;
 
                             for (let l = 0; l < rooms[i].dates.length; l++) {
+
+                                const testOtherRoomStartDate = new Date(rooms[i].dates[l].startDate);
+                                const otherRoomStartDate = new Date(Date.UTC(testOtherRoomStartDate.getUTCFullYear(), testOtherRoomStartDate.getUTCMonth(), testOtherRoomStartDate.getUTCDate()));
+                                const testOtherRoomEndDate = new Date(rooms[i].dates[l].endDate);
+                                const otherRoomEndDate = new Date(Date.UTC(testOtherRoomEndDate.getUTCFullYear(), testOtherRoomEndDate.getUTCMonth(), testOtherRoomEndDate.getUTCDate()));
+
                                 if (l != j) {
-                                    if (rooms[i].dates[l].endDate.getTime() > roomStartDate.getTime()) {
+                                    if (otherRoomStartDate.getTime() <= roomStartDate.getTime() && roomStartDate.getTime() <= otherRoomEndDate.getTime()) {
                                         found = 0;
-                                    } else if (rooms[i].dates[l].startDate.getTime() < roomEndDate.getTime()) {
+                                    } else if (otherRoomStartDate.getTime() <= roomEndDate.getTime() && roomEndDate.getTime() <= otherRoomEndDate.getTime()) {
                                         found = 0;
                                     }
                                 }
@@ -344,28 +394,53 @@ function checkRooms(arrivalDate, departureDate, roomType) {
 
 }
 
+var arrivalDate;
+var departureDate;
+var adults;
+var children;
+
 //Form submission to calculate available rooms
 app.post("/reserve", function(req, res){
 
-    const arrivalDate = req.body.arrivalDate;
-    const departureDate = req.body.departureDate;
-    const rooms = req.body.rooms;
-    const adults = req.body.adults;
-    const children = req.body.children;
+    roomsFilled = [];
+
+    arrivalDate = req.body.arrivalDate;
+    departureDate = req.body.departureDate;
+    rooms = req.body.rooms;
+    adults = req.body.adults;
+    children = req.body.children;
     const totalPeople = parseInt(adults) + parseInt(children);
     
     // const start = new Date("2023-03-03T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
     // const end = new Date("2023-03-07T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
 
     // Room.updateOne({ roomNumber: 1 }, { booked: true, dates: [{ startDate: start, endDate: end }] }, function(error) {
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log("success mothafu");
+    //     }
     // });
 
-    // Room.deleteMany({}, function(error) {
+    // const start = new Date("2023-03-10T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
+    // const end = new Date("2023-03-13T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
+
+    // Room.updateOne({ roomNumber: 1 }, { booked: true, $push: {dates: [{ startDate: start, endDate: end }]}  }, function(error) {
+    // });
+
+    // Room.updateMany({}, {booked: true}, function(error) {
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log("success");
+    //     }
+    // });
+
+    // RoomType.deleteMany({}, function(error) {
     // });
 
     if (totalPeople > 6) {
         bookingError = 1;
-        res.redirect("/reserve");
     } else {
         bookingError = 0;
 
@@ -395,9 +470,93 @@ app.post("/reserve", function(req, res){
             } else {
                 console.log("Rooms successfully filled!");
                 console.log(roomsFilled);
+                RoomType.deleteMany({}, function(error) {
+                    if (error) {
+                        console.log(error);
+                    }
+                });
+                const newRooms = [];
+                var single = 0;
+                var double = 0;
+                var triple = 0;
+                var master = 0;
+
+                const newSingle = new RoomType({
+                    type: "Single Room",
+                    doubles: 0,
+                    queens: 1,
+                    kings: 0,
+                    description: "Enjoy your stay in one of our single rooms at Hillside Suites, with a queen bed, a TV, a couch, and a desk.",
+                    price: 205, 
+                    image: "images/singleRoom.jpg",
+                    rooms: rooms
+                });
+
+                const newDouble = new RoomType({
+                    type: "Double Room",
+                    doubles: 2,
+                    queens: 0,
+                    kings: 0,
+                    description: "Enjoy your stay in one of our double rooms at Hillside Suites, with two double beds, a TV, a couch, and a desk.",
+                    price: 235,
+                    image: "images/doubleRoom.jpg",
+                    rooms: rooms
+                });
+
+                const newTriple = new RoomType({
+                    type: "Triple Room",
+                    doubles: 2,
+                    queens: 1,
+                    kings: 0,
+                    description: "Enjoy your stay in one of our triple rooms at Hillside Suites, with one queen bed, two double beds, a TV, a couch, and a desk.",
+                    price: 265,
+                    image: "images/tripleRoom.jpg",
+                    rooms: rooms
+                });
+
+                const newMaster = new RoomType({
+                    type: "Master Suite",
+                    doubles: 0,
+                    queens: 2,
+                    kings: 1,
+                    description: "Enjoy your stay in one of our master suites at Hillside Suites, with one king bed, two queen beds, two TVs, two couches, a desk, and a large bathtub.",
+                    price: 295,
+                    image: "images/accomodation3.jpg",
+                    rooms: rooms
+                });
+
+                for (let i = 0; i < roomsFilled.length; i++) {
+                    if (1 <= roomsFilled[i] && roomsFilled[i] <= 10 && single === 0) {
+                        newRooms.push(newSingle);
+                        single = 1;
+                    }
+                    else if (11 <= roomsFilled[i] && roomsFilled[i] <= 20 && double === 0) {
+                        newRooms.push(newDouble);
+                        double = 1;
+                    } else if (21 <= roomsFilled[i] && roomsFilled[i] <= 30 && triple === 0) {
+                        newRooms.push(newTriple);
+                        triple = 1;
+                    } else if (31 <= roomsFilled[i] && roomsFilled[i] <= 35 && master === 0) {
+                        newRooms.push(newMaster);
+                        master = 1;
+                    }
+                }
+                setTimeout(() => {
+                    RoomType.insertMany(newRooms, function(error) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Available rooms updated!");
+                        }
+                    });
+                }, 500);
             }      
-        }, 1000);               
+        }, 1000);         
     }    
+    setTimeout(() => {
+        res.redirect("/reserve");
+    }, 1500);
+
 });
 
 //Allows app to run locally and on Heroku

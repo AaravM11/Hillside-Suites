@@ -142,7 +142,7 @@
                 </div>
                 <div class="roomCard col-lg-6">
                   <div class="card-body">
-                      <h2 class="card-title"><%= availableRooms[i].type %></h2>
+                      <h2 class="card-title"><%= availableRooms[i].rooms + " Rooms " + availableRooms[i].type %></h2>
                       
                       <!-- Logic to display number and size of beds -->
                       <% if (availableRooms[i].doubles === 0 && availableRooms[i].queens === 1 && availableRooms[i].kings === 0) { %>
