@@ -193,6 +193,10 @@ app.get("/about", function(req, res){
     res.sendFile(__dirname + "/about.html");
 });
 
+app.get("/checkout", function(req, res){
+    res.sendFile(__dirname + "/checkout.html");
+});
+
 var bookingError = 0;
 
 app.get("/reserve" || "/book" || "/booknow", function(req, res){

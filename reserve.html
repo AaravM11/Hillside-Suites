@@ -23,7 +23,11 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
-    </head>
+
+        <!-- Stripe API -->
+        <script src="https://js.stripe.com/v3/"></script>
+    
+      </head>
 
     <body>
         <section id="titleReserve">
@@ -138,7 +142,28 @@
                   <p class="card-text text-muted">1 Queen</p>
                   <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   <h3 class="card-text">205<small class="text-muted"> USD/night</small></h3>
-                  <button class="btn btn-dark btn-lg">Select</button>
+                  <button id = "checkout1" class="btn btn-dark btn-lg">Select</button>
+                    <script>
+                      var stripe = Stripe(
+                          "pk_test_51MftCcIeIhwUXnLYprLuPcpKYSOIK1NU6Dcmj3SmVKwieyuoocVyGeQOoXOH0CnMAlhtbrxTMA90hSFyXkc7QquL00nvb6OJdA"
+                      )
+          
+                      document.getElementById("checkout1").addEventListener("click", function(){
+                          stripe.redirectToCheckout({
+                              lineItems: [
+                                  {
+                                      price: "price_1MgFssIeIhwUXnLYvjfBncn9",
+                                      quantity: 1
+                                  }
+                              ],
+                              mode: "subscription",
+                              successUrl: "https://www.google.com",
+                              cancelUrl: "https://www.twitter.com",
+                          })
+                          .then(function(result){
+                          });
+                      })
+                    </script>
                 </div>
               </div>
             </div>
