@@ -130,8 +130,31 @@
           <div class="spacer"></div>
 
           <% if (bookingError === 1) { %>
-              
+
           <% } %>
+          
+          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#error1">
+            Launch demo modal
+          </button>
+
+          <div class="modal fade" id="error1" tabindex="-1" role="dialog" aria-labelledby="modalError1" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalError1">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>The maximum occupancy per room is 6 people. Please reselect the number of adults and children per room.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div> -->
 
           <!-- Populates the page with all available and applicable rooms -->
           <% for (var i = 0; i < availableRooms.length; i++) { %>
@@ -163,75 +186,6 @@
               </div>
             </div>
           <% } %>
-
-          <!-- <div class="reserveCard card mb-3">
-            <div class="row g-0">
-              <div class="col-lg-5">
-                <img src="images/singleRoom.jpg" class="cardPic img-fluid rounded-start" alt="...">
-              </div>
-              <div class="roomCard col-lg-6">
-                <div class="card-body">
-                  <h2 class="card-title">Single Room</h2>
-                  <p class="card-text text-muted">1 Queen</p>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <h3 class="card-text">205<small class="text-muted"> USD/night</small></h3>
-                  <button class="btn btn-dark btn-lg">Select</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="reserveCard card mb-3">
-            <div class="row g-0">
-              <div class="col-lg-5">
-                <img src="images/doubleRoom.jpg" class="cardPic img-fluid rounded-start" alt="...">
-              </div>
-              <div class="roomCard col-lg-6">
-                <div class="card-body">
-                  <h2 class="card-title">Double Room</h2>
-                  <p class="card-text text-muted">2 Doubles</p>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <h3 class="card-text">235<small class="text-muted"> USD/night</small></h3>
-                  <button class="btn btn-dark btn-lg">Select</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="reserveCard card mb-3">
-            <div class="row g-0">
-              <div class="col-lg-5">
-                <img src="images/tripleRoom.jpg" class="cardPic img-fluid rounded-start" alt="...">
-              </div>
-              <div class="roomCard col-lg-6">
-                <div class="card-body">
-                  <h2 class="card-title">Triple Room</h2>
-                  <p class="card-text text-muted">1 Queen 2 Doubles</p>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <h3 class="card-text">265<small class="text-muted"> USD/night</small></h3>
-                  <button class="btn btn-dark btn-lg">Select</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="reserveCard card mb-3">
-            <div class="row g-0">
-              <div class="col-lg-5">
-                <img src="images/accomodation3.jpg" class="cardPic img-fluid rounded-start" alt="...">
-              </div>
-              <div class="roomCard col-lg-6">
-                <div class="card-body">
-                  <h2 class="card-title">Master Suite</h2>
-                  <p class="card-text text-muted">1 King 2 Queens</p>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <h3 class="card-text">295<small class="text-muted"> USD/night</small></h3>
-                  <button class="btn btn-dark btn-lg">Select</button>
-                </div>
-              </div>
-            </div>
-          </div> -->
-
           
         </section>
 
@@ -244,6 +198,7 @@
           <p class="footerText">Hillside Suites</p>
 
         </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script>
           // //Fetch all the forms to apply custom Bootstrap validation styles to
           // const forms = document.querySelectorAll('.needs-validation')
@@ -272,6 +227,9 @@
           //     form.classList.add('was-validated')
           //   }, false)
           // })
+
+          // document.getElementById("#error1").modal('show');
+          $("#error1").modal("show");
         </script>
     </body>
 </html>

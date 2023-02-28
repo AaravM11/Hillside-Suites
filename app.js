@@ -288,110 +288,130 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                 else {
 
                     // var breakLoop = 0;
-                    // for (let j = 0; j < rooms[i].dates.length; j++) {
-
-                    //     const roomStartDate = new Date(rooms[i].dates[j].startDate);
-                    //     const roomEndDate = new Date(rooms[i].dates[j].endDate);
-                    //     const userStartDate = new Date(arrivalDate);
-                    //     const userEndDate = new Date(departureDate);
-
-
-                    // }    
-                    
-                    // Room.find({ roomNumber: rooms[i].roomNumber, startDate: { $gte: rooms[i].startDate, $lte: rooms[i].endDate }}, function(error, workingDates) {
-                    //     console.log(workingDates.roomNumber);
-                    // });
-                    // Room.find({ roomNumber: rooms[i].roomNumber, endDate: { $gte: rooms[i].startDate, $lte: rooms[i].endDate } }, function(error, workingDates) {
-                    //     console.log(workingDates.roomNumber);
-                    // });
-
-                    var breakLoop = 0;
+                    var foundBooking = 1;
 
                     for (let j = 0; j < rooms[i].dates.length; j++) {
 
                         const testRoomStartDate = new Date(rooms[i].dates[j].startDate);
-                        const roomStartDate = new Date(Date.UTC(testRoomStartDate.getUTCFullYear(), testRoomStartDate.getUTCMonth(), testRoomStartDate.getUTCDate()));
+                        var test2RoomStartDate = new Date(Date.UTC(testRoomStartDate.getUTCFullYear(), testRoomStartDate.getUTCMonth(), testRoomStartDate.getUTCDate()));
+                        roomStartDate = test2RoomStartDate.getTime();
+                        
                         const testRoomEndDate = new Date(rooms[i].dates[j].endDate);
-                        const roomEndDate = new Date(Date.UTC(testRoomEndDate.getUTCFullYear(), testRoomEndDate.getUTCMonth(), testRoomEndDate.getUTCDate()));
+                        var test2RoomEndDate = new Date(Date.UTC(testRoomEndDate.getUTCFullYear(), testRoomEndDate.getUTCMonth(), testRoomEndDate.getUTCDate()));
+                        roomEndDate = test2RoomEndDate.getTime();
+                        
                         const testUserStartDate = new Date(arrivalDate);
-                        const userStartDate = new Date(Date.UTC(testUserStartDate.getUTCFullYear(), testUserStartDate.getUTCMonth(), testUserStartDate.getUTCDate()));
+                        var user2StartDate = new Date(Date.UTC(testUserStartDate.getUTCFullYear(), testUserStartDate.getUTCMonth(), testUserStartDate.getUTCDate()));
+                        userStartDate = user2StartDate.getTime();
+                        
                         const testUserEndDate = new Date(departureDate);
-                        const userEndDate = new Date(Date.UTC(testUserEndDate.getUTCFullYear(), testUserEndDate.getUTCMonth(), testUserEndDate.getUTCDate()));
+                        var user2EndDate = new Date(Date.UTC(testUserEndDate.getUTCFullYear(), testUserEndDate.getUTCMonth(), testUserEndDate.getUTCDate()));
+                        userEndDate = user2EndDate.getTime();
 
-                        console.log(roomStartDate);
-                        console.log(roomEndDate);
-                        console.log(userStartDate);
-                        console.log(userEndDate);
+                        console.log("roomStartDate:");
+                        console.log(test2RoomStartDate);
+                        // console.log(roomStartDate.getTime());
+                        console.log("roomEndDate:");
+                        console.log(test2RoomEndDate);
+                        // console.log(roomEndDate.getTime());
+                        console.log(j);
+                        console.log("userStartDate:");
+                        console.log(user2StartDate);
+                        // console.log(userStartDate.getTime());
+                        console.log("userEndDate:");
+                        console.log(user2EndDate);
+                        // console.log(userEndDate.getTime());
 
-                        if (roomStartDate.getTime() >= userEndDate.getTime()) {
+                        if (roomStartDate >= userEndDate) {
+                            console.log("room start date is greater or equal to user end date (found before)");
+                            console.log("j:" + j);
+                            console.log(roomStartDate >= userEndDate);
+                            console.log(roomStartDate);
+                            console.log(userEndDate);
+                            // var found = 1;
 
-                            var found = 1;
+                            // for (let l = 0; l < rooms[i].dates.length; l++) {
 
-                            for (let l = 0; l < rooms[i].dates.length; l++) {
+                            //     const testOtherRoomStartDate = new Date(rooms[i].dates[l].startDate);
+                            //     const otherRoomStartDate = new Date(Date.UTC(testOtherRoomStartDate.getUTCFullYear(), testOtherRoomStartDate.getUTCMonth(), testOtherRoomStartDate.getUTCDate()));
+                                
+                            //     const testOtherRoomEndDate = new Date(rooms[i].dates[l].endDate);
+                            //     const otherRoomEndDate = new Date(Date.UTC(testOtherRoomEndDate.getUTCFullYear(), testOtherRoomEndDate.getUTCMonth(), testOtherRoomEndDate.getUTCDate()));
+                                
+                            //     console.log("otherRoomStartDate:");
+                            //     console.log(otherRoomStartDate);
+                            //     console.log("otherRoomEndDate:");
+                            //     console.log(otherRoomEndDate);
+                            //     console.log("l: " + l);
 
-                                const testOtherRoomStartDate = new Date(rooms[i].dates[l].startDate);
-                                const otherRoomStartDate = new Date(Date.UTC(testOtherRoomStartDate.getUTCFullYear(), testOtherRoomStartDate.getUTCMonth(), testOtherRoomStartDate.getUTCDate()));
-                                const testOtherRoomEndDate = new Date(rooms[i].dates[l].endDate);
-                                const otherRoomEndDate = new Date(Date.UTC(testOtherRoomEndDate.getUTCFullYear(), testOtherRoomEndDate.getUTCMonth(), testOtherRoomEndDate.getUTCDate()));
+                            //     if (l != j) {
+                            //         console.log("checks a diff case");
+                            //         if (otherRoomStartDate.getTime() <= userStartDate && userStartDate <= otherRoomEndDate.getTime()) {
+                            //             found = 0;
+                            //             console.log("user start date is in between room start and end date, check fails");
+                            //         }
+                            //         else if (otherRoomStartDate.getTime() <= userEndDate && userEndDate <= otherRoomEndDate.getTime()) {
+                            //             found = 0;
+                            //             console.log("user end date is in between room start and end date, check fails");
+                            //         }
+                            //     }
 
-                                if (l != j) {
-                                    if (otherRoomStartDate.getTime() <= roomStartDate.getTime() && roomStartDate.getTime() <= otherRoomEndDate.getTime()) {
-                                        found = 0;
-                                    }
-                                    else if (otherRoomStartDate.getTime() <= roomEndDate.getTime() && roomEndDate.getTime() <= otherRoomEndDate.getTime()) {
-                                        found = 0;
-                                    }
-                                }
+                            // }
 
-                            }
+                            // if (found = 1 && !(alreadyChecked(rooms[i].roomNumber))) {
+                            //     console.log("found slot before");
+                            //     console.log(i);                             
+                            //     breakLoop = 1;
+                            //     roomsFilled.push(rooms[i].roomNumber);
+                            // }   
 
-                            if (found = 1 && !(alreadyChecked(rooms[i].roomNumber))) {
-                                console.log("found slot before");
-                                console.log(i);                             
-                                breakLoop = 1;
-                                roomsFilled.push(rooms[i].roomNumber);
-                                break;
-                            }   
+                        } else if (roomEndDate <= userStartDate) {
+                            console.log("room end date is less than or equal to user start date (found after)");
+                            // var found = 1;
 
+                            // for (let l = 0; l < rooms[i].dates.length; l++) {
+
+                            //     const testOtherRoomStartDate = new Date(rooms[i].dates[l].startDate);
+                            //     const otherRoomStartDate = new Date(Date.UTC(testOtherRoomStartDate.getUTCFullYear(), testOtherRoomStartDate.getUTCMonth(), testOtherRoomStartDate.getUTCDate()));
+                            //     const testOtherRoomEndDate = new Date(rooms[i].dates[l].endDate);
+                            //     const otherRoomEndDate = new Date(Date.UTC(testOtherRoomEndDate.getUTCFullYear(), testOtherRoomEndDate.getUTCMonth(), testOtherRoomEndDate.getUTCDate()));
+
+                            //     if (l != j) {
+                            //         if (otherRoomStartDate.getTime() <= userStartDate && userStartDate <= otherRoomEndDate.getTime()) {
+                            //             found = 0;
+                            //         } else if (otherRoomStartDate.getTime() <= userEndDate && userEndDate <= otherRoomEndDate.getTime()) {
+                            //             found = 0;
+                            //         }
+                            //     }
+                            // }
+
+                            // if (found = 1 && !(alreadyChecked(rooms[i].roomNumber))) {
+                            //     console.log("found slot after");
+                            //     console.log(i);                            
+                            //     breakLoop = 1;
+                            //     roomsFilled.push(rooms[i].roomNumber);
+                            // }                        
+                        
+                        } else {
+                            foundBooking = 0;
+                            break;
                         }
-                        else if (roomEndDate.getTime() <= userStartDate.getTime()) {
 
-                            var found = 1;
-
-                            for (let l = 0; l < rooms[i].dates.length; l++) {
-
-                                const testOtherRoomStartDate = new Date(rooms[i].dates[l].startDate);
-                                const otherRoomStartDate = new Date(Date.UTC(testOtherRoomStartDate.getUTCFullYear(), testOtherRoomStartDate.getUTCMonth(), testOtherRoomStartDate.getUTCDate()));
-                                const testOtherRoomEndDate = new Date(rooms[i].dates[l].endDate);
-                                const otherRoomEndDate = new Date(Date.UTC(testOtherRoomEndDate.getUTCFullYear(), testOtherRoomEndDate.getUTCMonth(), testOtherRoomEndDate.getUTCDate()));
-
-                                if (l != j) {
-                                    if (otherRoomStartDate.getTime() <= roomStartDate.getTime() && roomStartDate.getTime() <= otherRoomEndDate.getTime()) {
-                                        found = 0;
-                                    } else if (otherRoomStartDate.getTime() <= roomEndDate.getTime() && roomEndDate.getTime() <= otherRoomEndDate.getTime()) {
-                                        found = 0;
-                                    }
-                                }
-                            }
-
-                            if (found = 1 && !(alreadyChecked(rooms[i].roomNumber))) {
-                                console.log("found slot after");
-                                console.log(i);                            
-                                breakLoop = 1;
-                                roomsFilled.push(rooms[i].roomNumber);
-                                break;
-                            }
-                        }    
+                        // if (breakLoop === 1) {
+                        //     break;
+                        // }
                     }
-
-                    if (breakLoop === 1) {
+                    
+                    if (foundBooking === 1 && !(alreadyChecked(rooms[i].roomNumber))) {
+                        console.log("found open slot");
+                        console.log(i);     
+                        roomsFilled.push(rooms[i].roomNumber);                       
                         break;
-                    }
-                }                            
+                    }     
+                }
             }
         }
     });
-
 }
 
 var arrivalDate;
