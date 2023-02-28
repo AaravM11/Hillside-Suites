@@ -114,6 +114,25 @@
                   </div>
                 </div>
               </div>
+
+              <div id="map">
+                <script>
+                  function initMap() {
+                    let centerMTHS = {lat: 40.89419683937421, lng: -74.36020522327684}
+                    let lakeClub = {lat: 40.927694524353996, lng: -74.37558778876361}
+                    let willowbrookMall = {lat: 40.88927898359623, lng: -74.25972867527334}
+                    let map = new google.maps.Map(
+                      document.getElementById('map'), {zoom: 12, center: centerMTHS}
+                    );
+                    let marker = new google.maps.Marker({position: lakeClub, map: map})
+                    let marker2 = new google.maps.Marker({position: willowbrookMall, map: map})
+
+                  }
+                </script>
+
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHp36FhtQ7t4mrxvijkPteZHutRl8WoDU&callback=initMap&v=weekly" defer></script> 
+          
+              </div>
           </section>
     </body>    
 </html>
