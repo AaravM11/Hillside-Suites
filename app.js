@@ -156,7 +156,7 @@ for (let i = 30; i < 35; i++) {
 
 //Website Pages
 app.get("/" || "/home", function(req, res){
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(__dirname + "/index.html"); 
 
     //Only adds room types to DB once
     RoomType.find({}, function(error, foundRooms){
@@ -191,10 +191,6 @@ app.get("/accomodations", function(req, res){
 
 app.get("/about", function(req, res){
     res.sendFile(__dirname + "/about.html");
-});
-
-app.get("/checkout", function(req, res){
-    res.sendFile(__dirname + "/checkout.html");
 });
 
 var bookingError = 0;

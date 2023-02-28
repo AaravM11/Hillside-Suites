@@ -41,7 +41,7 @@
                     <div class="collapse navbar-collapse" id="navbarToggler01">
                       <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                          <a class="nav-link" href="/">Home</a>
+                          <a class="nav-link" href="amenities">Amenities</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="accomodations">Accomodations</a>
@@ -59,7 +59,7 @@
                 <!-- Title -->
                 <div class="row">
                   <div class="col-lg-5">
-                    <h1 class="titleName">Welcome to Hillside Suites, Where Your Greatest Dreams Come True</h1>
+                    <h1 class="titleName">Welcome to Hillside Suites</h1>  
                   </div>
                 </div>
 
@@ -178,6 +178,14 @@
           </form>
 
         </section>
+        
+        <script type = "text/javascript">
+          const bg = document.getElementById('titleMain'); 
+          window.addEventListener('scroll', function() {
+              bg.style.backgroundSize = 100 - +window.pageYOffset/10000+'%'; 
+        
+          })
+        </script> 
 
         <footer id="footer">
           
@@ -188,6 +196,8 @@
           <p class="footerText">Hillside Suites</p>
 
         </footer>
+
+        
 
     </body>
       
