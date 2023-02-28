@@ -211,6 +211,10 @@ app.get("/reserve" || "/book" || "/booknow", function(req, res){
 
 });
 
+app.get("/amenities", function(req, res){
+    res.sendFile(__dirname + "/amenities.html");
+});
+
 //Mailchimp API
 app.post("/", function(req, res){
 

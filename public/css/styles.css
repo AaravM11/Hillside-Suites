@@ -60,11 +60,12 @@ h1 {
     text-align: center;
 }
 
-.col-lg-5 {
+/* Aarav what the heck */
+/* .col-lg-5 {
     text-align: center;
     width: 100%;
     height: 100%; 
-}
+} */
 
 .picSection {
     text-align: center;
