@@ -115,6 +115,14 @@
             </div>
         </section>
 
+        <script type = "text/javascript">
+          const bg = document.getElementById('accomodationMain'); 
+          window.addEventListener('scroll', function() {
+              bg.style.backgroundSize = 100 - +window.pageYOffset/10000+'%'; 
+        
+          })
+        </script> 
+
         <footer id="footer">
           
             <i class="footerIcon fa-brands fa-instagram"></i>

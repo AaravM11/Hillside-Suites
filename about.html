@@ -131,8 +131,16 @@
                 <p class="contactOptions"><span class="footerIcon fa-solid fa-envelope"></span> hillsidesuites@gmail.com</p>
               </div>
             </div>
-
           </section>
+
+          <script type = "text/javascript">
+            const bg = document.getElementById('titleAbout'); 
+            window.addEventListener('scroll', function() {
+                bg.style.backgroundSize = 100 - +window.pageYOffset/10000+'%'; 
+          
+            })
+          </script> 
+
           <footer id="footer">
           
             <i class="footerIcon fa-brands fa-instagram"></i>
