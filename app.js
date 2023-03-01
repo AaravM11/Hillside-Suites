@@ -260,6 +260,11 @@ app.post("/", function(req, res){
 });
 
 var roomsFilled = [];
+var arrivalDate;
+var departureDate;
+var adults;
+var children;
+var checkoutRooms = [];
 
 function alreadyChecked(roomNumber) {
     for (let m = 0; m < roomsFilled.length; m++) {
@@ -268,6 +273,32 @@ function alreadyChecked(roomNumber) {
         }
     }
     return false;
+}
+
+function addToCheckoutRooms(i, rooms) {
+
+    var price;
+    if (rooms[i].type === "Single Room") {
+        price = 0;
+    } else if (rooms[i].type === "Double Room") {
+        price = 1;
+    } else if (rooms[i].type === "Triple Room") {
+        price = 2;
+    } else {
+        price = 3;
+    }
+
+    const specificRoom = {
+        type: rooms[i].type,
+        roomNumber: rooms[i].roomNumber,
+        startDate: arrivalDate,
+        endDate: departureDate,
+        adults: adults,
+        children: children,
+        price: defaultRooms[price].price
+    }
+
+    checkoutRooms.push(specificRoom);
 }
 
 //Function to book rooms
@@ -285,6 +316,7 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                         console.log("found open slot");
                         console.log(i);
                         roomsFilled.push(rooms[i].roomNumber);
+                        addToCheckoutRooms(i, rooms);
                         break;
                     }
                 }    
@@ -340,8 +372,9 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                     
                     if (foundBooking === 1 && !(alreadyChecked(rooms[i].roomNumber))) {
                         console.log("found open slot");
-                        console.log(i);     
-                        roomsFilled.push(rooms[i].roomNumber);                       
+                        console.log(i); 
+                        roomsFilled.push(rooms[i].roomNumber); 
+                        addToCheckoutRooms(i, rooms);                      
                         break;
                     }     
                 }
@@ -349,11 +382,6 @@ function checkRooms(arrivalDate, departureDate, roomType) {
         }
     });
 }
-
-var arrivalDate;
-var departureDate;
-var adults;
-var children;
 
 //Form submission to calculate available rooms
 app.post("/reserve", function(req, res){
@@ -503,6 +531,7 @@ app.post("/reserve", function(req, res){
                             console.log(error);
                         } else {
                             console.log("Available rooms updated!");
+                            console.log(checkoutRooms);
                         }
                     });
                 }, 500);
