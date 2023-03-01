@@ -82,9 +82,6 @@ h1 {
     width: 95%;
     height: 650px;
     object-fit: cover;
-    border: solid; 
-    border-radius: 2px;
-    border-color: black; 
 }
 
 .roomsPic2 {
@@ -92,7 +89,6 @@ h1 {
     margin: 6% 0;
     height: 563.56px;
     object-fit: cover;
-    border: 2px solid black; 
 }
 
 .testimonials {
