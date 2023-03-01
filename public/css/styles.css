@@ -338,8 +338,7 @@ h1 {
 
 .map {
     clear: none; 
-    padding-left: 22%; 
-    padding-top: 1%; 
+    text-align: center;
 }
 
 .mapText {
