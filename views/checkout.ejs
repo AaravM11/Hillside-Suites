@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Checkout</title>
+        <script src="https://js.stripe.com/v3/"></script>
+    </head>
+    <body>
+        <button id="checkout1">Checkout</button>
+        
+        <% if (checkoutRooms) { %>
+        <h1>myVar is here!</h1>
+        <% } else { %>
+        <h1>Boohiss no myVar!</h1>
+        <% } %>
+        <% var num = checkoutRooms; %>
+        
+
+        <script>
+
+            /*function getRoomInfo(checkoutRooms) {
+                
+            }*/
+
+
+            var stripe = Stripe(
+                "pk_test_51MftCcIeIhwUXnLYprLuPcpKYSOIK1NU6Dcmj3SmVKwieyuoocVyGeQOoXOH0CnMAlhtbrxTMA90hSFyXkc7QquL00nvb6OJdA"
+            )
+
+            document.getElementById("checkout1").addEventListener("click", function(){
+                stripe.redirectToCheckout({
+                    lineItems: [
+                        {
+                            price: "price_1MgeOsIeIhwUXnLYhrfca83a",
+                            quantity: num
+                        },
+                        {
+                            price: "price_1MgIaIIeIhwUXnLYC77NfonL",
+                            quantity: 1
+                        },
+                        {
+                            price: "price_1MgIgPIeIhwUXnLYa8ACHbBG",
+                            quantity: 1
+                        },
+                        {
+                            price: "price_1MgIgwIeIhwUXnLYvMSrrvvk",
+                            quantity: 1
+                        }
+                    ],
+                    mode: "payment",
+                    successUrl: "https://www.google.com",
+                    cancelUrl: "https://www.twitter.com",
+                })
+                .then(function(result){
+                });
+            })
+
+        </script>
+    </body>
+</html>

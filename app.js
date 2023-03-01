@@ -200,6 +200,7 @@ app.get("/about", function(req, res){
 });
 
 var bookingError = 0;
+app.locals.checkoutRooms = [];
 
 app.get("/reserve" || "/book" || "/booknow", function(req, res){
 
@@ -222,7 +223,8 @@ app.get("/amenities", function(req, res){
 });
 
 app.get("/checkout", function(req, res){
-    res.sendFile(__dirname + "/checkout.html");
+    res.render("checkout.ejs");
+    // res.sendFile(__dirname + "/checkout.html");
 });
 
 //Mailchimp API
@@ -264,7 +266,6 @@ var arrivalDate;
 var departureDate;
 var adults;
 var children;
-var checkoutRooms = [];
 
 function alreadyChecked(roomNumber) {
     for (let m = 0; m < roomsFilled.length; m++) {
