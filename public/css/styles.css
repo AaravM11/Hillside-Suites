@@ -179,14 +179,11 @@ h1 {
 
 /* Accomodations Page */
 #accomodationMain {
-    background-image: url(../images/accomodation2.jpg);
-    position: relative; 
+    background-image: url(../images/accomodationsNew.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 700px;
     width: 100%; 
-    height: 100vh; 
-    background-size: 100%;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat; 
 }
 
 #accomodationDescriptions h2 {
@@ -235,14 +232,11 @@ h1 {
 
 /* About Page */
 #titleAbout {
-    background-image: url(../images/about1.jpg);
-    position: relative; 
+    background-image: url(../images/aboutUs.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 700px;
     width: 100%; 
-    height: 100vh; 
-    background-size: 100%;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat; 
 }
 
 .aboutHeader {
@@ -291,14 +285,11 @@ h1 {
 
 /* Amenities Page */ 
 #titleAmenities {
-    background-image: url(../images/luxury2.jpeg);
-    position: relative; 
+    background-image: url(../images/lobby.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 700px;
     width: 100%; 
-    height: 100vh; 
-    background-size: 100%;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat; 
 }
 
 .amenities {
@@ -367,6 +358,9 @@ h1 {
     font-family: 'Poppins', sans-serif;
     color: rgb(255, 255, 255);
     font-size: 3.5rem;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    font-weight: bold;
 }
 
 .colored {
@@ -385,7 +379,7 @@ h1 {
 /* Reserve Page */
 
 #titleReserve {
-    background-image: url(../images/bookNow.jpg);
+    background-image: url(../images/reserveNew.jpg);
     position: relative; 
     width: 100%; 
     height: 100vh; 
