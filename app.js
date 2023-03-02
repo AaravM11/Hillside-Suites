@@ -202,7 +202,6 @@ app.get("/about", function(req, res){
 });
 
 var bookingError = 0;
-// app.locals.checkoutRooms = [];
 var checkoutRooms = [];
 
 app.get("/reserve" || "/book" || "/booknow", function(req, res){
@@ -227,12 +226,12 @@ app.get("/amenities", function(req, res){
 
 app.get("/checkout", function(req, res){
     var rooms = checkoutRooms.length;
-    res.render("checkout.ejs", {rooms});
+    res.render("checkout.ejs", {checkoutRooms});
 });
 
-app.get("/test", function(req, res){
-    res.render("test.ejs", {checkoutRooms})
-});
+// app.get("/test", function(req, res){
+//     res.render("test.ejs", {checkoutRooms})
+// });
 
 //Mailchimp API
 app.post("/", function(req, res){
@@ -395,6 +394,7 @@ function checkRooms(arrivalDate, departureDate, roomType) {
 app.post("/reserve", function(req, res){
 
     roomsFilled = [];
+    checkoutRooms = [];
 
     arrivalDate = req.body.arrivalDate;
     departureDate = req.body.departureDate;
@@ -463,11 +463,20 @@ app.post("/reserve", function(req, res){
             } else {
                 console.log("Rooms successfully filled!");
                 console.log(roomsFilled);
-                RoomType.deleteMany({}, function(error) {
-                    if (error) {
+                RoomType.deleteMany({}) 
+                    .then(function() {
+                        console.log("Available rooms reset");
+                    })
+                    .catch(function(error) {
                         console.log(error);
-                    }
-                });
+                    });
+
+                // RoomType.deleteMany({}, function(error) {
+                //     if (error) {
+                //         console.log(error);
+                //     }
+                // });
+                
                 const newRooms = [];
                 var single = 0;
                 var double = 0;
@@ -534,6 +543,9 @@ app.post("/reserve", function(req, res){
                         master = 1;
                     }
                 }
+
+                console.log("New Rooms: ");
+                console.log(newRooms);
 
                 RoomType.insertMany(newRooms) 
                     .then(function() {

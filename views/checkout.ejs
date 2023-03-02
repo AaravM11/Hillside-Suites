@@ -7,7 +7,7 @@
         <button id="checkout1">Checkout</button>
         <%console.log(rooms)%>
         <script>
-            var rooms = parseInt("<%= rooms %>");
+            var rooms = parseInt("<%= rooms %>").length;
             var stripe = Stripe(
                 "pk_test_51MftCcIeIhwUXnLYprLuPcpKYSOIK1NU6Dcmj3SmVKwieyuoocVyGeQOoXOH0CnMAlhtbrxTMA90hSFyXkc7QquL00nvb6OJdA"
             )
