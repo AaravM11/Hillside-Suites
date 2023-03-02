@@ -223,8 +223,9 @@ app.get("/amenities", function(req, res){
     res.sendFile(__dirname + "/amenities.html");
 });
 
-app.get("/checkout", function(req, res){
+app.get("/checkout", function(req, res, checkoutRooms){
     res.render("checkout.ejs");
+    res.send(checkoutRooms);
     // res.sendFile(__dirname + "/checkout.html");
 });
 
@@ -559,6 +560,7 @@ app.post("/reserve", function(req, res){
     }, 1500);
 
 });
+
 
 //Allows app to run locally and on Heroku
 app.listen(process.env.PORT || 3000, function() {
