@@ -21,8 +21,9 @@ h1 {
     background-image: url(../images/homePic4.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center center; 
     height: auto;  
-    max-width: 100%; 
+    width: auto; 
     padding-bottom: 10%; 
 }
 
@@ -265,7 +266,7 @@ h1 {
     background-image: url(../images/aboutUs.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: relative;
+    background-position: center center; 
     height: auto;
     max-width: 100%; 
 
@@ -339,11 +340,12 @@ h1 {
 }
 
 .first-amenity {
-    margin-bottom: -20%; 
+    margin-bottom: -25%; 
 }
 
 .second-amenity {
-    margin-bottom: -20%; 
+    margin-top: 10%; 
+    margin-bottom: -25%;
 }
 
 .first-amenity-pic {
@@ -361,25 +363,25 @@ h1 {
 .text-big {
     background-color:#1D5C63; 
     opacity: .5; 
-    transform: translate(30%, -200%);
+    transform: translate(30%, -250%);
     width: 35%;
-    height: 400px; 
+    height: 30%; 
     padding: 5%; 
     opacity: .95;  
+    position: sticky; 
 }
 
 .text-big2 {
     background-color:#1D5C63; 
     opacity: .5; 
-    transform: translate(150%, -180%);
+    transform: translate(150%, -250%);
     width: 35%;
-    height: 400px; 
+    height: 30%; 
     padding: 5%; 
     opacity: .95;  
 }
 
 .big-amenity {
-    margin: 0 auto; 
 }
 
 .in-blue {
