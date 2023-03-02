@@ -447,10 +447,12 @@ h1 {
     align-items: center; 
     justify-content: center; 
     flex-direction: column; 
+    background-color:rgba(29, 92, 99);
 }
 
 .mapText {
     text-align: center;  
+    color: white; 
 }
 
 .amenitiesText {
