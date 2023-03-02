@@ -565,3 +565,15 @@ small {
     padding-bottom: 2%;
 }
 
+.reserveErrorHeader {
+    font-size: 2.5rem;
+}
+
+.reserveErrorText {
+    padding-top: 15px;
+}
+
+.reserveErrorJumbo {
+    text-align: center;
+    margin: 5% 8% 0 8%;
+}

@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
 const mongoose = require("mongoose");
+// const cors = require("cors");
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
+// app.use(cors());
 
 //Connects to MongoDB
 const dbUrl = "mongodb+srv://ryan24sun:HBAMRS123@cluster0.7ckyjat.mongodb.net/hillsideSuitesDB?retryWrites=true&w=majority";
@@ -423,11 +425,12 @@ app.post("/reserve", function(req, res){
     //     }
     // });
 
-    // RoomType.deleteMany({}, function(error) {
+    // Room.deleteMany({}, function(error) {
     // });
 
     if (totalPeople > 6) {
         bookingError = 1;
+        res.redirect("/reserve");
     } else {
         bookingError = 0;
 
@@ -536,6 +539,9 @@ app.post("/reserve", function(req, res){
                     })
                     .catch(function(error) {
                         console.log(error);
+                    })
+                    .finally(function() {
+                        res.redirect("/reserve");
                     });
 
                 // setTimeout(() => {
@@ -548,16 +554,12 @@ app.post("/reserve", function(req, res){
                 //         }
                 //     });
                 // }, 500);
-
-                
-                
-                
             }      
         }, 1000);         
     }    
-    setTimeout(() => {
-        res.redirect("/reserve");
-    }, 1500);
+    // setTimeout(() => {
+    //     res.redirect("/reserve");
+    // }, 1500);
 
 });
 

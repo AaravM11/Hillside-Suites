@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <title>HillsideSuites</title>
-      
+
         <!-- Bootstrap Scripts -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
@@ -23,7 +23,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
-    </head>
+      </head>
 
     <body>
         <section id="titleReserve">
@@ -63,6 +63,24 @@
             </div>
 
         </section>
+
+        <% if (bookingError === 1) { %>
+          <div class="jumbotron-fluid alert alert-danger reserveErrorJumbo">
+            <h2 class="display-4 reserveErrorHeader">Correction Needed</h2>
+            <p class="lead reserveErrorText">We're sorry, but you have selected more than 6 people per room, which exceeds the maximum occupancy for our rooms.</p>
+            <hr class="my-4">
+            <p>To accomodation your group size, we recommend booking multiple rooms.</p>
+          </div>
+        <% } %>
+
+        <% if (bookingError === 2) { %>
+          <div class="jumbotron-fluid alert alert-danger reserveErrorJumbo">
+            <h2 class="display-4 reserveErrorHeader">No Available Rooms</h2>
+            <p class="lead reserveErrorText">We're sorry, but it looks like all of our rooms are currently booked for the dates you've selected. We apologize for any inconvenience this may cause.</p>
+            <hr class="my-4">
+            <p>You can also adjust your travel dates to see if there are other dates where we have rooms available.</p>
+          </div>
+        <% } %>
 
         <section id="reserveForm">
 
@@ -128,21 +146,17 @@
           </form>
 
           <div class="spacer"></div>
-
-          <% if (bookingError === 1) { %>
-
-          <% } %>
           
-          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#error1">
+          <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#error1">
             Launch demo modal
-          </button>
+          </button> -->
 
           <div class="modal fade" id="error1" tabindex="-1" role="dialog" aria-labelledby="modalError1" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="modalError1">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -150,11 +164,11 @@
                   <p>The maximum occupancy per room is 6 people. Please reselect the number of adults and children per room.</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
 
           <!-- Populates the page with all available and applicable rooms -->
           <% for (var i = 0; i < availableRooms.length; i++) { %>
@@ -198,7 +212,10 @@
           <p class="footerText">Hillside Suites</p>
 
         </footer>
+
+        <!-- JQuery Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="../reserve.js" charset="utf-8"></script>
         <script>
           // //Fetch all the forms to apply custom Bootstrap validation styles to
           // const forms = document.querySelectorAll('.needs-validation')
@@ -226,10 +243,7 @@
 
           //     form.classList.add('was-validated')
           //   }, false)
-          // })
-
-          // document.getElementById("#error1").modal('show');
-          $("#error1").modal("show");
+          // });
         </script>
     </body>
 </html>
