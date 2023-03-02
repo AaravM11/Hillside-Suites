@@ -338,14 +338,100 @@ h1 {
     max-width: 100%; 
 }
 
+.first-amenity {
+    margin-bottom: -20%; 
+}
+
+.second-amenity {
+    margin-bottom: -20%; 
+}
+
+.first-amenity-pic {
+    margin-bottom: -30%; 
+}
+
 .amenities {
     margin: 10% 10% 10% 10%;
     text-align: center;
     max-width: 550px;
     max-height: 450px; 
     background-color: white;
-    
 }    
+
+.text-big {
+    background-color:#1D5C63; 
+    opacity: .5; 
+    transform: translate(30%, -200%);
+    width: 35%;
+    height: 400px; 
+    padding: 5%; 
+    opacity: .95;  
+}
+
+.text-big2 {
+    background-color:#1D5C63; 
+    opacity: .5; 
+    transform: translate(150%, -180%);
+    width: 35%;
+    height: 400px; 
+    padding: 5%; 
+    opacity: .95;  
+}
+
+.big-amenity {
+    margin: 0 auto; 
+}
+
+h3 {
+    color: black; 
+}
+
+.in-blue {
+    color: white; 
+}
+
+.big-pic {
+    height: 20%; 
+    width: 100%; 
+}
+
+.amenities-pic {
+    background-color: #1D5C63;
+}
+
+.amenities1 {
+    width: 50%;
+    height: 50%; 
+    margin-left: 15%; 
+    margin-top: 10%; 
+    margin-bottom: 10%; 
+}
+
+.amenity-desc {
+    background-color: #EDE6DB;
+    transform: translate(170%,-240%);
+    width: 30%;
+    height: 30%; 
+    padding: 5%; 
+    opacity: .95; 
+}
+
+.amenities2 {
+    width: 50%;
+    height: 50%; 
+    margin-left: 30%; 
+    margin-top: 10%; 
+    margin-bottom: 10%; 
+}
+
+.amenity-desc2 {
+    background-color: #EDE6DB;
+    transform: translate(50%,-240%);
+    width: 30%;
+    height: 30%; 
+    padding: 5%; 
+    opacity: .95; 
+}
 
 .titling-body {
     margin-top: 10%;
@@ -367,6 +453,7 @@ h1 {
     clear: none; 
     padding-left: 22%; 
     padding-top: 1%; 
+    margin-bottom: 3%; 
 }
 
 .mapText {
