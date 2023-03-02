@@ -225,10 +225,13 @@ app.get("/amenities", function(req, res){
     res.sendFile(__dirname + "/amenities.html");
 });
 
-app.get("/checkout", function(req, res, checkoutRooms){
-    res.render("checkout.ejs");
-    res.send(checkoutRooms);
-    // res.sendFile(__dirname + "/checkout.html");
+app.get("/checkout", function(req, res){
+    var rooms = checkoutRooms.length;
+    res.render("checkout.ejs", {rooms});
+});
+
+app.get("/test", function(req, res){
+    res.render("test.ejs", {checkoutRooms})
 });
 
 //Mailchimp API
@@ -536,6 +539,7 @@ app.post("/reserve", function(req, res){
                     .then(function() {
                         console.log("Available rooms updated!");
                         console.log(checkoutRooms);
+                        console.log(checkoutRooms.length);
                     })
                     .catch(function(error) {
                         console.log(error);

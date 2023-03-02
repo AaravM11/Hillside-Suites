@@ -4,9 +4,10 @@
         <script src="https://js.stripe.com/v3/"></script>
     </head>
     <body>
-        <button id="checkout1">Checkout</button>        
+        <button id="checkout1">Checkout</button>
+        <%console.log(rooms)%>
         <script>
-            console.log(checkoutRooms);
+            var rooms = parseInt("<%= rooms %>");
             var stripe = Stripe(
                 "pk_test_51MftCcIeIhwUXnLYprLuPcpKYSOIK1NU6Dcmj3SmVKwieyuoocVyGeQOoXOH0CnMAlhtbrxTMA90hSFyXkc7QquL00nvb6OJdA"
             )
@@ -16,19 +17,19 @@
                     lineItems: [
                         {
                             price: "price_1MgeOsIeIhwUXnLYhrfca83a",
-                            quantity: 1
+                            quantity: rooms
                         },
                         {
                             price: "price_1MgIaIIeIhwUXnLYC77NfonL",
-                            quantity: 1
+                            quantity: rooms
                         },
                         {
                             price: "price_1MgIgPIeIhwUXnLYa8ACHbBG",
-                            quantity: 1
+                            quantity: rooms
                         },
                         {
                             price: "price_1MgIgwIeIhwUXnLYvMSrrvvk",
-                            quantity: 1
+                            quantity: rooms
                         }
                     ],
                     mode: "payment",
