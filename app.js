@@ -671,7 +671,7 @@ app.post("/reserve", function(req, res){
 });
 
 app.post(("/pickRoom"), function(req, res) {
-
+    console.log(req.body.roomButton);
 });
 
 //Allows app to run locally and on Heroku
