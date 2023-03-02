@@ -208,7 +208,7 @@ app.get("/reserve" || "/book" || "/booknow", function(req, res){
 
     // Uses database info to fill the reserve page
     RoomType.find({}, function(error, availableRooms) {
-        res.render("reserve", {bookingError, availableRooms: availableRooms});
+        res.render("reserve.ejs", {bookingError, availableRooms: availableRooms});
     });
 
     const date = new Date();
