@@ -200,7 +200,8 @@ app.get("/about", function(req, res){
 });
 
 var bookingError = 0;
-app.locals.checkoutRooms = [];
+// app.locals.checkoutRooms = [];
+var checkoutRooms = [];
 
 app.get("/reserve" || "/book" || "/booknow", function(req, res){
 
@@ -526,16 +527,30 @@ app.post("/reserve", function(req, res){
                         master = 1;
                     }
                 }
-                setTimeout(() => {
-                    RoomType.insertMany(newRooms, function(error) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log("Available rooms updated!");
-                            console.log(checkoutRooms);
-                        }
+
+                RoomType.insertMany(newRooms) 
+                    .then(function() {
+                        console.log("Available rooms updated!");
+                        console.log(checkoutRooms);
+                    })
+                    .catch(function(error) {
+                        console.log(error);
                     });
-                }, 500);
+
+                // setTimeout(() => {
+                //     RoomType.insertMany(newRooms, function(error) {
+                //         if (error) {
+                //             console.log(error);
+                //         } else {
+                //             console.log("Available rooms updated!");
+                //             console.log(checkoutRooms);
+                //         }
+                //     });
+                // }, 500);
+
+                
+                
+                
             }      
         }, 1000);         
     }    
