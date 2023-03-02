@@ -463,9 +463,96 @@ app.post("/reserve", function(req, res){
             } else {
                 console.log("Rooms successfully filled!");
                 console.log(roomsFilled);
+                const newRooms = [];
                 RoomType.deleteMany({}) 
                     .then(function() {
                         console.log("Available rooms reset");
+                    })
+                    .then(function() {
+                        // const newRooms = [];
+                        var single = 0;
+                        var double = 0;
+                        var triple = 0;
+                        var master = 0;
+
+                        const newSingle = new RoomType({
+                            type: "Single Room",
+                            doubles: 0,
+                            queens: 1,
+                            kings: 0,
+                            description: "Enjoy your stay in one of our single rooms at Hillside Suites, with a queen bed, a TV, a couch, and a desk.",
+                            price: 205, 
+                            image: "images/singleRoom.jpg",
+                            rooms: rooms
+                        });
+
+                        const newDouble = new RoomType({
+                            type: "Double Room",
+                            doubles: 2,
+                            queens: 0,
+                            kings: 0,
+                            description: "Enjoy your stay in one of our double rooms at Hillside Suites, with two double beds, a TV, a couch, and a desk.",
+                            price: 235,
+                            image: "images/doubleRoom.jpg",
+                            rooms: rooms
+                        });
+
+                        const newTriple = new RoomType({
+                            type: "Triple Room",
+                            doubles: 2,
+                            queens: 1,
+                            kings: 0,
+                            description: "Enjoy your stay in one of our triple rooms at Hillside Suites, with one queen bed, two double beds, a TV, a couch, and a desk.",
+                            price: 265,
+                            image: "images/tripleRoom.jpg",
+                            rooms: rooms
+                        });
+
+                        const newMaster = new RoomType({
+                            type: "Master Suite",
+                            doubles: 0,
+                            queens: 2,
+                            kings: 1,
+                            description: "Enjoy your stay in one of our master suites at Hillside Suites, with one king bed, two queen beds, two TVs, two couches, a desk, and a large bathtub.",
+                            price: 295,
+                            image: "images/accomodation3.jpg",
+                            rooms: rooms
+                        });
+
+                        for (let i = 0; i < roomsFilled.length; i++) {
+                            if (1 <= roomsFilled[i] && roomsFilled[i] <= 10 && single === 0) {
+                                newRooms.push(newSingle);
+                                single = 1;
+                            }
+                            else if (11 <= roomsFilled[i] && roomsFilled[i] <= 20 && double === 0) {
+                                newRooms.push(newDouble);
+                                double = 1;
+                            } else if (21 <= roomsFilled[i] && roomsFilled[i] <= 30 && triple === 0) {
+                                newRooms.push(newTriple);
+                                triple = 1;
+                            } else if (31 <= roomsFilled[i] && roomsFilled[i] <= 35 && master === 0) {
+                                newRooms.push(newMaster);
+                                master = 1;
+                            }
+                        }
+
+                        console.log("New Rooms: ");
+                        console.log(newRooms);
+
+                    })
+                    .then(function() {
+                        RoomType.insertMany(newRooms) 
+                        .then(function() {
+                            console.log("Available rooms updated!");
+                            console.log(checkoutRooms);
+                            console.log(checkoutRooms.length);
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        })
+                        .finally(function() {
+                            res.redirect("/reserve");
+                        });
                     })
                     .catch(function(error) {
                         console.log(error);
@@ -477,88 +564,92 @@ app.post("/reserve", function(req, res){
                 //     }
                 // });
                 
-                const newRooms = [];
-                var single = 0;
-                var double = 0;
-                var triple = 0;
-                var master = 0;
+                // const newRooms = [];
+                // var single = 0;
+                // var double = 0;
+                // var triple = 0;
+                // var master = 0;
 
-                const newSingle = new RoomType({
-                    type: "Single Room",
-                    doubles: 0,
-                    queens: 1,
-                    kings: 0,
-                    description: "Enjoy your stay in one of our single rooms at Hillside Suites, with a queen bed, a TV, a couch, and a desk.",
-                    price: 205, 
-                    image: "images/singleRoom.jpg",
-                    rooms: rooms
-                });
+                // const newSingle = new RoomType({
+                //     type: "Single Room",
+                //     doubles: 0,
+                //     queens: 1,
+                //     kings: 0,
+                //     description: "Enjoy your stay in one of our single rooms at Hillside Suites, with a queen bed, a TV, a couch, and a desk.",
+                //     price: 205, 
+                //     image: "images/singleRoom.jpg",
+                //     rooms: rooms
+                // });
 
-                const newDouble = new RoomType({
-                    type: "Double Room",
-                    doubles: 2,
-                    queens: 0,
-                    kings: 0,
-                    description: "Enjoy your stay in one of our double rooms at Hillside Suites, with two double beds, a TV, a couch, and a desk.",
-                    price: 235,
-                    image: "images/doubleRoom.jpg",
-                    rooms: rooms
-                });
+                // const newDouble = new RoomType({
+                //     type: "Double Room",
+                //     doubles: 2,
+                //     queens: 0,
+                //     kings: 0,
+                //     description: "Enjoy your stay in one of our double rooms at Hillside Suites, with two double beds, a TV, a couch, and a desk.",
+                //     price: 235,
+                //     image: "images/doubleRoom.jpg",
+                //     rooms: rooms
+                // });
 
-                const newTriple = new RoomType({
-                    type: "Triple Room",
-                    doubles: 2,
-                    queens: 1,
-                    kings: 0,
-                    description: "Enjoy your stay in one of our triple rooms at Hillside Suites, with one queen bed, two double beds, a TV, a couch, and a desk.",
-                    price: 265,
-                    image: "images/tripleRoom.jpg",
-                    rooms: rooms
-                });
+                // const newTriple = new RoomType({
+                //     type: "Triple Room",
+                //     doubles: 2,
+                //     queens: 1,
+                //     kings: 0,
+                //     description: "Enjoy your stay in one of our triple rooms at Hillside Suites, with one queen bed, two double beds, a TV, a couch, and a desk.",
+                //     price: 265,
+                //     image: "images/tripleRoom.jpg",
+                //     rooms: rooms
+                // });
 
-                const newMaster = new RoomType({
-                    type: "Master Suite",
-                    doubles: 0,
-                    queens: 2,
-                    kings: 1,
-                    description: "Enjoy your stay in one of our master suites at Hillside Suites, with one king bed, two queen beds, two TVs, two couches, a desk, and a large bathtub.",
-                    price: 295,
-                    image: "images/accomodation3.jpg",
-                    rooms: rooms
-                });
+                // const newMaster = new RoomType({
+                //     type: "Master Suite",
+                //     doubles: 0,
+                //     queens: 2,
+                //     kings: 1,
+                //     description: "Enjoy your stay in one of our master suites at Hillside Suites, with one king bed, two queen beds, two TVs, two couches, a desk, and a large bathtub.",
+                //     price: 295,
+                //     image: "images/accomodation3.jpg",
+                //     rooms: rooms
+                // });
 
-                for (let i = 0; i < roomsFilled.length; i++) {
-                    if (1 <= roomsFilled[i] && roomsFilled[i] <= 10 && single === 0) {
-                        newRooms.push(newSingle);
-                        single = 1;
-                    }
-                    else if (11 <= roomsFilled[i] && roomsFilled[i] <= 20 && double === 0) {
-                        newRooms.push(newDouble);
-                        double = 1;
-                    } else if (21 <= roomsFilled[i] && roomsFilled[i] <= 30 && triple === 0) {
-                        newRooms.push(newTriple);
-                        triple = 1;
-                    } else if (31 <= roomsFilled[i] && roomsFilled[i] <= 35 && master === 0) {
-                        newRooms.push(newMaster);
-                        master = 1;
-                    }
-                }
+                // for (let i = 0; i < roomsFilled.length; i++) {
+                //     if (1 <= roomsFilled[i] && roomsFilled[i] <= 10 && single === 0) {
+                //         newRooms.push(newSingle);
+                //         single = 1;
+                //     }
+                //     else if (11 <= roomsFilled[i] && roomsFilled[i] <= 20 && double === 0) {
+                //         newRooms.push(newDouble);
+                //         double = 1;
+                //     } else if (21 <= roomsFilled[i] && roomsFilled[i] <= 30 && triple === 0) {
+                //         newRooms.push(newTriple);
+                //         triple = 1;
+                //     } else if (31 <= roomsFilled[i] && roomsFilled[i] <= 35 && master === 0) {
+                //         newRooms.push(newMaster);
+                //         master = 1;
+                //     }
+                // }
 
-                console.log("New Rooms: ");
-                console.log(newRooms);
+                // console.log("New Rooms: ");
+                // console.log(newRooms);
 
-                RoomType.insertMany(newRooms) 
-                    .then(function() {
-                        console.log("Available rooms updated!");
-                        console.log(checkoutRooms);
-                        console.log(checkoutRooms.length);
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    })
-                    .finally(function() {
-                        res.redirect("/reserve");
-                    });
+                // setTimeout(() => {
+                //     RoomType.insertMany(newRooms) 
+                //     .then(function() {
+                //         console.log("Available rooms updated!");
+                //         console.log(checkoutRooms);
+                //         console.log(checkoutRooms.length);
+                //     })
+                //     .catch(function(error) {
+                //         console.log(error);
+                //     })
+                //     .finally(function() {
+                //         res.redirect("/reserve");
+                //     });
+                // }, 500);
+
+                
 
                 // setTimeout(() => {
                 //     RoomType.insertMany(newRooms, function(error) {
@@ -579,6 +670,9 @@ app.post("/reserve", function(req, res){
 
 });
 
+app.post(("/pickRoom"), function(req, res) {
+
+});
 
 //Allows app to run locally and on Heroku
 app.listen(process.env.PORT || 3000, function() {
