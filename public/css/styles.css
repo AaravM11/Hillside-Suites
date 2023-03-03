@@ -449,6 +449,9 @@ h1 {
     align-items: center; 
     justify-content: center; 
     flex-direction: column; 
+}
+
+.map-back {
     background-color:rgba(29, 92, 99);
 }
 
@@ -518,13 +521,26 @@ h1 {
 
 #titleReserve {
     background-image: url(../images/igor-chitz-SbWWKC7r-HQ-unsplash.jpg);
-    position: relative; 
-    width: 100%; 
-    height: 100vh; 
-    background-size: 100%;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat; 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+    height: auto;  
+    width: auto; 
+    padding-bottom: 10%; 
+    
+}
+
+.title-reserve {
+    margin-top: 60%; 
+    padding-top: 5%;
+    padding-bottom: 5%;  
+    text-align: center;
+    max-width: 400px;
+    font-family: Montserrat;
+    color: rgb(255, 255, 255);
+    font-size: 2.5rem;
+    background-color: rgba(29, 92, 99, .7);  
+    backdrop-filter: blur(10px);
 }
 
 #reserveForm {
