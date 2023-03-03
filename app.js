@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
 const mongoose = require("mongoose");
-// const cors = require("cors");
 const stripe = require("stripe")("sk_test_51MfBlHJC3q9WXHkJ2S874VHuIkq4jva77exzNVkyusdJ5fuTtzqZVBWKaq23b87pFytro8ZPMDnlZuLCT5GfawGl00u514N1ck");
 
 const app = express();
@@ -13,7 +12,6 @@ app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(cors());
 
 //Connects to MongoDB
 const dbUrl = "mongodb+srv://ryan24sun:HBAMRS123@cluster0.7ckyjat.mongodb.net/hillsideSuitesDB?retryWrites=true&w=majority";
@@ -107,8 +105,6 @@ const roomsSchema = {
 
 const Room = mongoose.model("Room", roomsSchema);
 
-var date = new Date().toISOString();
-
 const allRooms = [];
 
 for (let i = 0; i < 10; i++) {
@@ -116,10 +112,6 @@ for (let i = 0; i < 10; i++) {
         type: "Single Room",
         roomNumber: i + 1,
         booked: false,
-        dates: [{
-            startDate: date,
-            endDate: date
-        }]
     });
     allRooms.push(singleRoom);
 }
@@ -129,10 +121,6 @@ for (let i = 10; i < 20; i++) {
         type: "Double Room",
         roomNumber: i + 1,
         booked: false,
-        dates: [{
-            startDate: date,
-            endDate: date
-        }]
     });
     allRooms.push(doubleRoom);
 }
@@ -142,10 +130,6 @@ for (let i = 20; i < 30; i++) {
         type: "Triple Room",
         roomNumber: i + 1,
         booked: false,
-        dates: [{
-            startDate: date,
-            endDate: date
-        }]
     });
     allRooms.push(tripleRoom);
 }
@@ -155,10 +139,6 @@ for (let i = 30; i < 35; i++) {
         type: "Master Suite",
         roomNumber: i + 1,
         booked: false,
-        dates: [{
-            startDate: date,
-            endDate: date
-        }]
     });
     allRooms.push(masterSuite);
 }
@@ -212,13 +192,6 @@ app.get("/reserve" || "/book" || "/booknow", function(req, res){
         res.render("reserve.ejs", {bookingError, availableRooms: availableRooms});
     });
 
-    const date = new Date();
-    Room.updateMany({ booked: false }, { dates: [{ startDate: date, endDate: date }] }, function(error) {
-        if (error) {
-            console.log(error);
-        }
-    });
-
 });
 
 app.get("/amenities", function(req, res){
@@ -226,13 +199,42 @@ app.get("/amenities", function(req, res){
 });
 
 app.get("/checkout", function(req, res){
-    var rooms = checkoutRooms.length;
     res.render("checkout.ejs", {checkoutRooms});
 });
 
-// app.get("/test", function(req, res){
-//     res.render("test.ejs", {checkoutRooms})
-// });
+var comingFromStripe = 0;
+
+app.get("/success", function(req, res){
+    if (comingFromStripe === 1) {
+        comingFromStripe = 2;
+        for (let i = 0; i < finalRooms.length; i++) {
+            Room.updateOne({ roomNumber: finalRooms[i].roomNumber }, { booked: true, $push: {dates: [{ startDate: finalRooms[i].startDate, endDate: finalRooms[i].endDate }]} })
+                .then(function() {
+                    console.log("Rooms booked!");
+                })
+                .catch(function(error) {
+                    console.log(error);
+                })
+        }
+        RoomType.deleteMany({}) 
+            .then(function() {
+                console.log("Available rooms reset");
+            })
+            .then(function() {
+                RoomType.insertMany(defaultRooms)
+                    .then(function() {
+                        console.log("Default rooms restored");
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    })
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
+    }
+    res.render("success.ejs", {comingFromStripe});
+});
 
 //Mailchimp API
 app.post("/", function(req, res){
@@ -571,11 +573,16 @@ app.post("/reserve", function(req, res){
 
 });
 
+const paymentSuccess = [];
+var finalRooms = [];
+
+//Stripe checkout
 app.post(("/pickRoom"), async function(req, res) {
 
     const chosenRoom = req.body.roomButton;
-    const finalRooms = [];
+    finalRooms = [];
     var checkoutPic;
+    comingFromStripe = 1;
 
     for (let i = 0; i < checkoutRooms.length; i++) {
         if (chosenRoom === checkoutRooms[i].type) {
@@ -590,6 +597,7 @@ app.post(("/pickRoom"), async function(req, res) {
         }
     }    
 
+    //Create a new Stripe checkout session
     const session = await stripe.checkout.sessions.create({
         line_items: [
             {
@@ -598,6 +606,7 @@ app.post(("/pickRoom"), async function(req, res) {
                     unit_amount: finalRooms[0].price * 100,
                     product_data: {
                         name: finalRooms[0].type,
+                        description: "ArrivalDate: " + arrivalDate + " Departure Date: " + departureDate,
                         //Image needs to be a public url to work
                         image: [checkoutPic],                        
                     },                    
@@ -606,9 +615,11 @@ app.post(("/pickRoom"), async function(req, res) {
             },
         ],
         mode: "payment",
-        success_url: `${req.protocol}://${req.get("host")}/reserve`,
+        success_url: `${req.protocol}://${req.get("host")}/success`,
         cancel_url: `${req.protocol}://${req.get("host")}/reserve`,
     });
+
+    console.log(session);
 
     res.redirect(session.url);
 });
