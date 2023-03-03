@@ -11,9 +11,8 @@
             var stripe = Stripe(
                 "pk_test_51MftCcIeIhwUXnLYprLuPcpKYSOIK1NU6Dcmj3SmVKwieyuoocVyGeQOoXOH0CnMAlhtbrxTMA90hSFyXkc7QquL00nvb6OJdA"
             )
-
-            document.getElementById("checkout1").addEventListener("click", function(){
-                stripe.redirectToCheckout({
+            window.onLoad() 
+            stripe.redirectToCheckout({
                     lineItems: [
                         {
                             price: "price_1MgeOsIeIhwUXnLYhrfca83a",
@@ -38,7 +37,10 @@
                 })
                 .then(function(result){
                 });
-            })
+
+            // document.getElementById("checkout1").addEventListener("click", function(){
+                
+            // })
 
         </script>
     </body>

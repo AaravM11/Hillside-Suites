@@ -195,7 +195,7 @@
                       <p class="card-text"><%= availableRooms[i].description %></p>
                       <h3 class="card-text"><%= availableRooms[i].price %><small class="text-muted"> USD/night</small></h3>
                       <form action="/pickRoom" method="post">
-                        <button type="submit" value="<%= availableRooms[i].type %>" name="roomButton" class="btn btn-dark btn-lg">Select</button>
+                        <button type="submit" value="<%= availableRooms[i].type %>" name="roomButton" id="checkoutBtn" class="btn btn-dark btn-lg">Select</button>
                       </form>
                   </div>
                 </div>
@@ -217,7 +217,6 @@
 
         <!-- JQuery Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <script src="../reserve.js" charset="utf-8"></script>
         <script>
           // //Fetch all the forms to apply custom Bootstrap validation styles to
           // const forms = document.querySelectorAll('.needs-validation')
