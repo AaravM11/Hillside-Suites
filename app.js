@@ -5,7 +5,6 @@ const request = require("request");
 const https = require("https");
 const mongoose = require("mongoose");
 // const cors = require("cors");
-const axios = require('axios');
 const stripe = require("stripe")("sk_test_51MfBlHJC3q9WXHkJ2S874VHuIkq4jva77exzNVkyusdJ5fuTtzqZVBWKaq23b87pFytro8ZPMDnlZuLCT5GfawGl00u514N1ck");
 
 const app = express();
