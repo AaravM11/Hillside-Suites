@@ -193,7 +193,7 @@ h1 {
 
 /* Accomodations Page */
 #accomodationMain {
-    background-image: url(../images/yayaq-destination-ptj2xDWxEJU-unsplash.jpg);
+    background-image: url(../images/d8ab42125604113.611ca9bc57750.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
@@ -268,7 +268,7 @@ h1 {
 
 /* About Page */
 #titleAbout {
-    background-image: url(../images/vancouver-g8a30b6f4c_1920.jpg);
+    background-image: url(../images/ODADA-Hotel_Paradox-0590.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; 
@@ -509,9 +509,8 @@ h1 {
     margin-bottom: 20%; 
 }
 
-.luxAmen {
-    font-weight: 10;  
-    font-family: 'Poppins';  
+.luxAmen {  
+    font-family: 'Poppins', sans-serif;
 }
 
 .colored {
