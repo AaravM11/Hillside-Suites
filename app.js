@@ -1,20 +1,19 @@
-
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
 const mongoose = require("mongoose");
-const stripe = require("stripe")("sk_test_51MfBlHJC3q9WXHkJ2S874VHuIkq4jva77exzNVkyusdJ5fuTtzqZVBWKaq23b87pFytro8ZPMDnlZuLCT5GfawGl00u514N1ck");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 const app = express();
 
 app.set("view engine", "ejs");
-
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 //Connects to MongoDB
-const dbUrl = "mongodb+srv://ryan24sun:HBAMRS123@cluster0.7ckyjat.mongodb.net/hillsideSuitesDB?retryWrites=true&w=majority";
+const dbUrl = process.env.MONGODB_KEY;
 
 const connectDB = async () => {
     try {
@@ -33,6 +32,7 @@ connectDB();
 
 //Reserve Page Default Rooms Database Layout
 const roomsDescriptionSchema = {
+    // sessionId: String,
     type: String,
     doubles: Number,
     queens: Number,
@@ -211,7 +211,7 @@ app.get("/reserve" || "/book" || "/booknow", function(req, res){
 });
 
 app.get("/amenities", function(req, res){
-    res.sendFile(__dirname + "/amenities.html");
+    res.render("amenities.ejs", {mapKey: process.env.MAP_KEY});
 });
 
 app.get("/checkout", function(req, res){
@@ -321,7 +321,7 @@ app.post("/", function(req, res){
 
     const options = {
         method: "POST",
-        auth: "HillsideSuites:05d75f6f5dfc49c208dd6a0f4a302ef6-us21"
+        auth: process.env.MAILCHIMP_KEY
     }
 
     const request = https.request(url, options, function(response) {
@@ -392,6 +392,17 @@ function checkRooms(arrivalDate, departureDate, roomType) {
 
     Room.find({type: roomType})
         .then(function(rooms) {
+
+            const testUserStartDate = new Date(arrivalDate);
+            var user2StartDate = new Date(Date.UTC(testUserStartDate.getUTCFullYear(), testUserStartDate.getUTCMonth(), testUserStartDate.getUTCDate()));
+            userStartDate = user2StartDate.getTime();
+            
+            const testUserEndDate = new Date(departureDate);
+            var user2EndDate = new Date(Date.UTC(testUserEndDate.getUTCFullYear(), testUserEndDate.getUTCMonth(), testUserEndDate.getUTCDate()));
+            userEndDate = user2EndDate.getTime();
+
+            totalDays = (userEndDate - userStartDate) / 86400000;
+
             //Checks each room until it finds one that is vacant
             for (let i = 0; i < rooms.length; i++) {
                 if (rooms[i].booked === false) {
@@ -403,6 +414,7 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                         break;
                     }
                 }    
+
                 //Checks if a start and end date is compatible with a booked room
                 else {
 
@@ -417,16 +429,6 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                         const testRoomEndDate = new Date(rooms[i].dates[j].endDate);
                         var test2RoomEndDate = new Date(Date.UTC(testRoomEndDate.getUTCFullYear(), testRoomEndDate.getUTCMonth(), testRoomEndDate.getUTCDate()));
                         roomEndDate = test2RoomEndDate.getTime();
-                        
-                        const testUserStartDate = new Date(arrivalDate);
-                        var user2StartDate = new Date(Date.UTC(testUserStartDate.getUTCFullYear(), testUserStartDate.getUTCMonth(), testUserStartDate.getUTCDate()));
-                        userStartDate = user2StartDate.getTime();
-                        
-                        const testUserEndDate = new Date(departureDate);
-                        var user2EndDate = new Date(Date.UTC(testUserEndDate.getUTCFullYear(), testUserEndDate.getUTCMonth(), testUserEndDate.getUTCDate()));
-                        userEndDate = user2EndDate.getTime();
-
-                        totalDays = (userEndDate - userStartDate) / 86400000;
 
                         if (roomStartDate >= userEndDate) {
                             console.log("room start date is greater or equal to user end date (found before)");
