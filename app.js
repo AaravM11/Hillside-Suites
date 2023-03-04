@@ -351,22 +351,8 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                         var user2EndDate = new Date(Date.UTC(testUserEndDate.getUTCFullYear(), testUserEndDate.getUTCMonth(), testUserEndDate.getUTCDate()));
                         userEndDate = user2EndDate.getTime();
 
-                        console.log("roomStartDate:");
-                        console.log(test2RoomStartDate);
-                        console.log("roomEndDate:");
-                        console.log(test2RoomEndDate);
-                        console.log(j);
-                        console.log("userStartDate:");
-                        console.log(user2StartDate);
-                        console.log("userEndDate:");
-                        console.log(user2EndDate);
-
                         if (roomStartDate >= userEndDate) {
                             console.log("room start date is greater or equal to user end date (found before)");
-                            console.log("j:" + j);
-                            console.log(roomStartDate >= userEndDate);
-                            console.log(roomStartDate);
-                            console.log(userEndDate);
 
                         } else if (roomEndDate <= userStartDate) {
                             console.log("room end date is less than or equal to user start date (found after)");                     
@@ -414,6 +400,15 @@ app.post("/reserve", function(req, res){
     adults = req.body.adults;
     children = req.body.children;
     const totalPeople = parseInt(adults) + parseInt(children);
+
+    const today = new Date();
+    const todayDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+
+    const arriveTempDate = new Date(arrivalDate);
+    const arrivalCompare = new Date(Date.UTC(arriveTempDate.getUTCFullYear(), arriveTempDate.getUTCMonth(), arriveTempDate.getUTCDate()));
+
+    const departTempDate = new Date(departureDate);
+    const departureCompare = new Date(Date.UTC(departTempDate.getUTCFullYear(), departTempDate.getUTCMonth(), departTempDate.getUTCDate()));
     
     // const start = new Date("2023-03-03T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
     // const end = new Date("2023-03-07T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
@@ -443,12 +438,23 @@ app.post("/reserve", function(req, res){
     // Room.deleteMany({}, function(error) {
     // });
 
+    //Send error if total people exceeds maximum room capacity
     if (totalPeople > 6) {
         bookingError = 1;
         res.redirect("/reserve");
+
+    //Send error if invalid dates are entered
+    } else if (departureCompare.getTime() <= arrivalCompare.getTime()) {
+        bookingError = 3;
+        res.redirect("/reserve");
+    } else if (arrivalCompare.getTime() <= todayDate.getTime()) {
+        bookingError = 3;
+        res.redirect("/reserve");
+
     } else {
         bookingError = 0;
 
+        //Check available room types based on total people per room
         if (totalPeople <= 2) {
             for (let k = 0; k < rooms; k++) {
                 checkRooms(arrivalDate, departureDate, "Single Room");
@@ -573,7 +579,6 @@ app.post("/reserve", function(req, res){
 
 });
 
-const paymentSuccess = [];
 var finalRooms = [];
 
 //Stripe checkout

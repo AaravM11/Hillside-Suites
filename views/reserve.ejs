@@ -71,7 +71,7 @@
             <h2 class="display-4 reserveErrorHeader">Correction Needed</h2>
             <p class="lead reserveErrorText">We're sorry, but you have selected more than 6 people per room, which exceeds the maximum occupancy for our rooms.</p>
             <hr class="my-4">
-            <p>To accomodation your group size, we recommend booking multiple rooms.</p>
+            <p>To accomodate your group size, we recommend booking multiple rooms.</p>
           </div>
         <% } %>
 
@@ -81,6 +81,15 @@
             <p class="lead reserveErrorText">We're sorry, but it looks like all of our rooms are currently booked for the dates you've selected. We apologize for any inconvenience this may cause.</p>
             <hr class="my-4">
             <p>You can also adjust your travel dates to see if there are other dates where we have rooms available.</p>
+          </div>
+        <% } %>
+
+        <% if (bookingError === 3) { %>
+          <div class="jumbotron-fluid alert alert-danger reserveErrorJumbo">
+            <h2 class="display-4 reserveErrorHeader">Correction Needed</h2>
+            <p class="lead reserveErrorText">We're sorry, but the booking dates you have selected are not valid.</p>
+            <hr class="my-4">
+            <p>In order to proceed with your booking, please change your booking dates.</p>
           </div>
         <% } %>
 
@@ -153,7 +162,7 @@
             Launch demo modal
           </button> -->
 
-          <div class="modal fade" id="error1" tabindex="-1" role="dialog" aria-labelledby="modalError1" aria-hidden="true">
+          <!-- <div class="modal fade" id="error1" tabindex="-1" role="dialog" aria-labelledby="modalError1" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -170,7 +179,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Populates the page with all available and applicable rooms -->
           <% for (var i = 0; i < availableRooms.length; i++) { %>
@@ -181,7 +190,14 @@
                 </div>
                 <div class="roomCard col-lg-6">
                   <div class="card-body">
-                      <h2 class="card-title"><%= availableRooms[i].rooms + " Rooms " + availableRooms[i].type %></h2>
+
+                      <% if (availableRooms.length === 4) { %>
+                        <h2 class="card-title"><%= availableRooms[i].type %></h2>
+                      <% } else if (availableRooms[i].rooms === 1) { %>
+                        <h2 class="card-title"><%= availableRooms[i].rooms + " Room " + availableRooms[i].type %></h2>
+                      <% } else { %>
+                        <h2 class="card-title"><%= availableRooms[i].rooms + " Rooms " + availableRooms[i].type %></h2>
+                      <% } %>  
                       
                       <!-- Logic to display number and size of beds -->
                       <% if (availableRooms[i].doubles === 0 && availableRooms[i].queens === 1 && availableRooms[i].kings === 0) { %>
