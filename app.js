@@ -348,6 +348,7 @@ var roomsFilled = [];
 var newRooms = [];
 var arrivalDate;
 var departureDate;
+var totalDays;
 var adults;
 var children;
 
@@ -424,6 +425,8 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                         const testUserEndDate = new Date(departureDate);
                         var user2EndDate = new Date(Date.UTC(testUserEndDate.getUTCFullYear(), testUserEndDate.getUTCMonth(), testUserEndDate.getUTCDate()));
                         userEndDate = user2EndDate.getTime();
+
+                        totalDays = (userEndDate - userStartDate) / 86400000;
 
                         if (roomStartDate >= userEndDate) {
                             console.log("room start date is greater or equal to user end date (found before)");
@@ -650,7 +653,7 @@ app.post(("/pickRoom"), async function(req, res) {
             {
                 price_data: {
                     currency: "usd",
-                    unit_amount: finalRooms[0].price * 100,
+                    unit_amount: finalRooms[0].price * 100 * totalDays,
                     product_data: {
                         name: finalRooms[0].type,
                         description: "ArrivalDate: " + arrivalDate + " Departure Date: " + departureDate,
