@@ -62,22 +62,22 @@
 
           </section>
 
-          <% if (comingFromStripe === 1 || comingFromStripe === 3) { %>
+          <% if (mailchimpSuccess === 1) { %>
             <section id="successMessage">
               <div class="jumbotron-fluid alert alert-success successJumbo">
-                  <h2 class="display-4 reserveErrorHeader">Thank You!</h2>
-                  <p class="lead reserveErrorText">Your booking has been successfully processed and you will get an email confirmation shortly.</p>
+                  <h2 class="display-4 reserveErrorHeader">Thank you for Signing Up!</h2>
+                  <p class="lead reserveErrorText">We are thrilled to have you on board and look forward to sharing exciting news and updates with you.</p>
                   <hr class="my-4">
-                  <p>We look forward to welcoming you soon!</p>
+                  <p>Stay tuned for upcoming emails and exclusive offers.</p>
                 </div>
             </section>
           <% } else { %>
             <section id="successMessage">
               <div class="jumbotron-fluid alert alert-danger successJumbo">
-                  <h2 class="display-4 reserveErrorHeader">Payment Error</h2>
-                  <p class="lead reserveErrorText">We're sorry, but there was an error processing your payment.</p>
+                  <h2 class="display-4 reserveErrorHeader">Signup Error</h2>
+                  <p class="lead reserveErrorText">We apologize, but we were unable to process your request to sign up for our mailing list.</p>
                   <hr class="my-4">
-                  <p>Please double-check your payment information and try again.</p>
+                  <p>Please ensure that you have entered a valid email address and try again.</p>
                 </div>
             </section>  
           <% } %>     

@@ -143,6 +143,22 @@ for (let i = 30; i < 35; i++) {
     allRooms.push(masterSuite);
 }
 
+const ordersSchema = {
+    name: String,
+    email: String,
+    adults: Number,
+    children: Number,
+    type: String,
+    rooms: [{
+        roomNumber: Number
+    }],
+    startDate: String,
+    endDate: String,
+    totalPrice: Number
+}
+
+const Order = mongoose.model("Order", ordersSchema);
+
 //Website Pages
 app.get("/" || "/home", function(req, res){
     res.sendFile(__dirname + "/index.html"); 
@@ -202,39 +218,88 @@ app.get("/checkout", function(req, res){
     res.render("checkout.ejs", {checkoutRooms});
 });
 
+app.get("/mailchimp", function(req, res){    
+    if (mailchimpSuccess === 0) {
+        res.redirect("/");
+    } else {
+        res.render("mailchimp.ejs", {mailchimpSuccess});
+    }
+})
+
 var comingFromStripe = 0;
 
-app.get("/success", function(req, res){
-    if (comingFromStripe === 1) {
-        comingFromStripe = 2;
-        for (let i = 0; i < finalRooms.length; i++) {
-            Room.updateOne({ roomNumber: finalRooms[i].roomNumber }, { booked: true, $push: {dates: [{ startDate: finalRooms[i].startDate, endDate: finalRooms[i].endDate }]} })
-                .then(function() {
-                    console.log("Rooms booked!");
-                })
-                .catch(function(error) {
-                    console.log(error);
-                })
-        }
-        RoomType.deleteMany({}) 
-            .then(function() {
-                console.log("Available rooms reset");
-            })
-            .then(function() {
-                RoomType.insertMany(defaultRooms)
+app.get("/success", async function(req, res){
+    
+    if (comingFromStripe === 0) {
+        res.redirect("/");
+    } else {
+        const sessionOrder = await stripe.checkout.sessions.retrieve(
+            session.id
+        );
+    
+        console.log(sessionOrder);
+    
+        if (comingFromStripe === 1 && sessionOrder.payment_status === "unpaid") {
+            comingFromStripe = 2;
+        } else {
+            if (comingFromStripe === 1 && sessionOrder.payment_status === "paid") {
+                comingFromStripe = 3;
+                for (let i = 0; i < finalRooms.length; i++) {
+                    Room.updateOne({ roomNumber: finalRooms[i].roomNumber }, { booked: true, $push: {dates: [{ startDate: finalRooms[i].startDate, endDate: finalRooms[i].endDate }]} })
+                        .then(function() {
+                            console.log("Rooms booked!");
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        })
+                }
+                RoomType.deleteMany({}) 
                     .then(function() {
-                        console.log("Default rooms restored");
+                        console.log("Available rooms reset");
+                    })
+                    .then(function() {
+                        RoomType.insertMany(defaultRooms)
+                            .then(function() {
+                                console.log("Default rooms restored");
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            })
                     })
                     .catch(function(error) {
                         console.log(error);
-                    })
-            })
-            .catch(function(error) {
-                console.log(error);
-            })
-    }
-    res.render("success.ejs", {comingFromStripe});
+                    });
+        
+                const finalRoomNumbers = [];
+        
+                for (let i = 0; i < finalRooms.length; i++) {
+                    const roomNumber = finalRooms[i].roomNumber;
+                    const roomObject = { roomNumber: roomNumber };
+                    console.log(roomObject);
+                    finalRoomNumbers.push(roomObject);
+                }
+                
+                console.log(finalRoomNumbers);
+    
+                await Order.create({
+                    name: sessionOrder.customer_details.name,
+                    email: sessionOrder.customer_details.email,
+                    adults: adults * rooms,
+                    children: children * rooms,
+                    type: finalRooms[0].type,
+                    rooms: finalRoomNumbers,
+                    startDate: finalRooms[0].startDate,
+                    endDate: finalRooms[0].endDate,
+                    totalPrice: sessionOrder.amount_total / 100
+                });
+            }
+        }
+
+        res.render("success.ejs", {comingFromStripe});
+    }    
 });
+
+var mailchimpSuccess = 0;
 
 //Mailchimp API
 app.post("/", function(req, res){
@@ -260,14 +325,23 @@ app.post("/", function(req, res){
     }
 
     const request = https.request(url, options, function(response) {
+
+        if (response.statusCode === 200) {
+            mailchimpSuccess = 1;
+            res.redirect("/mailchimp");
+            
+        } else {
+            mailchimpSuccess = 2;
+            res.redirect("/mailchimp");
+        }
+
         response.on("data", function(data) {
             console.log(JSON.parse(data));
-        })
-    })
+        });
+    });
 
     request.write(jsonData);
     request.end();
-
 });
 
 var roomsFilled = [];
@@ -377,19 +451,13 @@ function checkRooms(arrivalDate, departureDate, roomType) {
         .catch(function(error) {
             console.log(error);
         });
-
-    Room.find({ type: roomType }, function(error, rooms) {
-        if (error) {
-            console.log(error);
-        } else {
-
-            
-        }
-    });
 }
 
 //Form submission to calculate available rooms
 app.post("/reserve", function(req, res){
+
+    // Order.deleteMany({}, function(error) {
+    // });
 
     roomsFilled = [];
     checkoutRooms = [];
@@ -409,34 +477,6 @@ app.post("/reserve", function(req, res){
 
     const departTempDate = new Date(departureDate);
     const departureCompare = new Date(Date.UTC(departTempDate.getUTCFullYear(), departTempDate.getUTCMonth(), departTempDate.getUTCDate()));
-    
-    // const start = new Date("2023-03-03T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
-    // const end = new Date("2023-03-07T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
-
-    // Room.updateOne({ roomNumber: 1 }, { booked: true, dates: [{ startDate: start, endDate: end }] }, function(error) {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log("success mothafu");
-    //     }
-    // });
-
-    // const start = new Date("2023-03-10T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
-    // const end = new Date("2023-03-13T00:00:00".replace(/-/g, '\/').replace(/T.+/, ''));
-
-    // Room.updateOne({ roomNumber: 1 }, { booked: true, $push: {dates: [{ startDate: start, endDate: end }]}  }, function(error) {
-    // });
-
-    // Room.updateMany({}, {booked: true}, function(error) {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log("success");
-    //     }
-    // });
-
-    // Room.deleteMany({}, function(error) {
-    // });
 
     //Send error if total people exceeds maximum room capacity
     if (totalPeople > 6) {
@@ -478,6 +518,7 @@ app.post("/reserve", function(req, res){
                 bookingError = 2;
                 console.log("Not all rooms filled");
                 console.log(roomsFilled);
+                res.redirect("/reserve");
             } else {
                 console.log("Rooms successfully filled!");
                 console.log(roomsFilled);
@@ -580,6 +621,7 @@ app.post("/reserve", function(req, res){
 });
 
 var finalRooms = [];
+var session;
 
 //Stripe checkout
 app.post(("/pickRoom"), async function(req, res) {
@@ -603,7 +645,7 @@ app.post(("/pickRoom"), async function(req, res) {
     }    
 
     //Create a new Stripe checkout session
-    const session = await stripe.checkout.sessions.create({
+    session = await stripe.checkout.sessions.create({
         line_items: [
             {
                 price_data: {
@@ -623,8 +665,6 @@ app.post(("/pickRoom"), async function(req, res) {
         success_url: `${req.protocol}://${req.get("host")}/success`,
         cancel_url: `${req.protocol}://${req.get("host")}/reserve`,
     });
-
-    console.log(session);
 
     res.redirect(session.url);
 });
