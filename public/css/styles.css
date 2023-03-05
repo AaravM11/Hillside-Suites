@@ -651,3 +651,12 @@ small {
     margin: 7% 8%;
     padding: 2% 0;
 }
+
+.termsConditionsButton {
+    padding-top: 2%;
+}
+
+.citations {
+    padding-top: -1%;
+    padding-bottom: 2%;
+}
