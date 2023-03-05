@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
 const mongoose = require("mongoose");
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const stripe = require("stripe")("sk_test_51MfBlHJC3q9WXHkJ2S874VHuIkq4jva77exzNVkyusdJ5fuTtzqZVBWKaq23b87pFytro8ZPMDnlZuLCT5GfawGl00u514N1ck");
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 //Connects to MongoDB
-const dbUrl = process.env.MONGODB_KEY;
+const dbUrl = "mongodb+srv://ryan24sun:HBAMRS123@cluster0.7ckyjat.mongodb.net/hillsideSuitesDB?retryWrites=true&w=majority";
 
 const connectDB = async () => {
     try {
@@ -53,7 +53,7 @@ const singleRoom = new RoomType({
     kings: 0,
     description: "Enjoy your stay in one of our single rooms at Hillside Suites, with a queen bed, a TV, a couch, and a desk.",
     price: 205, 
-    image: "images/singleRoom.jpg",
+    image: "http://cdn.home-designing.com/wp-content/uploads/2019/10/green-and-white-bedroom.jpg",
     rooms: rooms
 });
 
@@ -64,7 +64,7 @@ const doubleRoom = new RoomType({
     kings: 0,
     description: "Enjoy your stay in one of our double rooms at Hillside Suites, with two double beds, a TV, a couch, and a desk.",
     price: 235,
-    image: "images/doubleRoom.jpg",
+    image: "https://www.nh-hotels.com/corporate/assets/uploads/2022/11/17175816/hotels-design-_int_6_green-rooms.jpg",
     rooms: rooms
 });
 
@@ -75,7 +75,7 @@ const tripleRoom = new RoomType({
     kings: 0,
     description: "Enjoy your stay in one of our triple rooms at Hillside Suites, with one queen bed, two double beds, a TV, a couch, and a desk.",
     price: 265,
-    image: "images/tripleRoom.jpg",
+    image: "https://www.lennoxmiamibeach.com/resourcefiles/homeroomsliderimages/terrace-poolside-double-in-lennoxmiamibeach-florida.jpg",
     rooms: rooms
 });
 
@@ -86,7 +86,7 @@ const masterSuite = new RoomType({
     kings: 1,
     description: "Enjoy your stay in one of our master suites at Hillside Suites, with one king bed, two queen beds, two TVs, two couches, a desk, and a large bathtub.",
     price: 295,
-    image: "images/accomodation3.jpg",
+    image: "http://cdn.home-designing.com/wp-content/uploads/2020/01/green-bedroom-ideas.jpg",
     rooms: rooms
 });
 
@@ -211,7 +211,7 @@ app.get("/reserve" || "/book" || "/booknow", function(req, res){
 });
 
 app.get("/amenities", function(req, res){
-    res.render("amenities.ejs", {mapKey: process.env.MAP_KEY});
+    res.render("amenities.ejs");
 });
 
 app.get("/checkout", function(req, res){
@@ -321,7 +321,7 @@ app.post("/", function(req, res){
 
     const options = {
         method: "POST",
-        auth: process.env.MAILCHIMP_KEY
+        auth: "HillsideSuites:05d75f6f5dfc49c208dd6a0f4a302ef6-us21"
     }
 
     const request = https.request(url, options, function(response) {
@@ -545,7 +545,7 @@ app.post("/reserve", function(req, res){
                             kings: 0,
                             description: "Enjoy your stay in one of our single rooms at Hillside Suites, with a queen bed, a TV, a couch, and a desk.",
                             price: 205, 
-                            image: "images/singleRoom.jpg",
+                            image: "http://cdn.home-designing.com/wp-content/uploads/2019/10/green-and-white-bedroom.jpg",
                             rooms: rooms
                         });
 
@@ -556,7 +556,7 @@ app.post("/reserve", function(req, res){
                             kings: 0,
                             description: "Enjoy your stay in one of our double rooms at Hillside Suites, with two double beds, a TV, a couch, and a desk.",
                             price: 235,
-                            image: "images/doubleRoom.jpg",
+                            image: "https://www.nh-hotels.com/corporate/assets/uploads/2022/11/17175816/hotels-design-_int_6_green-rooms.jpg",
                             rooms: rooms
                         });
 
@@ -567,7 +567,7 @@ app.post("/reserve", function(req, res){
                             kings: 0,
                             description: "Enjoy your stay in one of our triple rooms at Hillside Suites, with one queen bed, two double beds, a TV, a couch, and a desk.",
                             price: 265,
-                            image: "images/tripleRoom.jpg",
+                            image: "https://www.lennoxmiamibeach.com/resourcefiles/homeroomsliderimages/terrace-poolside-double-in-lennoxmiamibeach-florida.jpg",
                             rooms: rooms
                         });
 
@@ -578,7 +578,7 @@ app.post("/reserve", function(req, res){
                             kings: 1,
                             description: "Enjoy your stay in one of our master suites at Hillside Suites, with one king bed, two queen beds, two TVs, two couches, a desk, and a large bathtub.",
                             price: 295,
-                            image: "images/accomodation3.jpg",
+                            image: "http://cdn.home-designing.com/wp-content/uploads/2020/01/green-bedroom-ideas.jpg",
                             rooms: rooms
                         });
 
@@ -644,7 +644,9 @@ app.post(("/pickRoom"), async function(req, res) {
 
     for (let j = 0; j < newRooms.length; j++) {
         if (newRooms[j].type === chosenRoom) {
-            checkoutPic = chosenRoom[j].image;
+            checkoutPic = newRooms[j].image;
+            console.log("checkoutPic");
+            console.log(checkoutPic);
             break;
         }
     }    
@@ -659,8 +661,7 @@ app.post(("/pickRoom"), async function(req, res) {
                     product_data: {
                         name: finalRooms[0].type,
                         description: "ArrivalDate: " + arrivalDate + " Departure Date: " + departureDate,
-                        //Image needs to be a public url to work
-                        image: [checkoutPic],                        
+                        images: [checkoutPic],                        
                     },                    
                 },
                 quantity: rooms,                

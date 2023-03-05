@@ -252,6 +252,13 @@ h1 {
     width: 100%;
 }
 
+.singleRoom {
+    padding: 6%;
+    width: 900px;
+    object-fit: cover;
+    max-height: 650px;
+}
+
 .sideDescription {
     padding: 6% 5%;
 }
@@ -262,7 +269,7 @@ h1 {
 }
 
 .masterSuite {
-    background-color: #1D5C63;
+    background-color: #1A3C40;
     color: white;
 }
 
@@ -557,11 +564,11 @@ h1 {
 }
 
 .formCount {
-    padding: 1%;
+    padding: 2% 1%;
 }
 
 .viewRates {
-    width: 25%;
+    width: 160px;
     margin-top: 2%;
     margin-bottom: 5%;
 }
@@ -571,7 +578,8 @@ h1 {
 }
 
 .cardPic {
-    min-height: 422.53px;
+    height: 422.52px;
+    width: 777.22px;
     object-fit: cover;
 }
 
