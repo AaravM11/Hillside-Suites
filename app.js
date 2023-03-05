@@ -190,8 +190,8 @@ app.get("/" || "/home", function(req, res){
     });
 });
 
-app.get("/accomodations", function(req, res){
-    res.sendFile(__dirname + "/accomodations.html");
+app.get("/accommodations", function(req, res){
+    res.sendFile(__dirname + "/accommodations.html");
 });
 
 app.get("/about", function(req, res){
@@ -351,6 +351,7 @@ var departureDate;
 var totalDays;
 var adults;
 var children;
+var totalPeople;
 
 function alreadyChecked(roomNumber) {
     for (let m = 0; m < roomsFilled.length; m++) {
@@ -461,7 +462,7 @@ function checkRooms(arrivalDate, departureDate, roomType) {
 //Form submission to calculate available rooms
 app.post("/reserve", function(req, res){
 
-    // Order.deleteMany({}, function(error) {
+    // Room.deleteMany({}, function(error) {
     // });
 
     roomsFilled = [];
@@ -472,7 +473,7 @@ app.post("/reserve", function(req, res){
     rooms = req.body.rooms;
     adults = req.body.adults;
     children = req.body.children;
-    const totalPeople = parseInt(adults) + parseInt(children);
+    totalPeople = parseInt(adults) + parseInt(children);
 
     const today = new Date();
     const todayDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
@@ -660,7 +661,7 @@ app.post(("/pickRoom"), async function(req, res) {
                     unit_amount: finalRooms[0].price * 100 * totalDays,
                     product_data: {
                         name: finalRooms[0].type,
-                        description: "ArrivalDate: " + arrivalDate + " Departure Date: " + departureDate,
+                        description: "Arrival Date: " + arrivalDate + " Departure Date: " + departureDate,
                         images: [checkoutPic],                        
                     },                    
                 },

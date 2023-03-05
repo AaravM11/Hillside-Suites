@@ -1,10 +1,14 @@
-
+/* General styling */
 body {
     background-color: #EDE6DB;
     font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
+    font-family: 'Poppins', sans-serif;
+}
+
+h2 {
     font-family: 'Poppins', sans-serif;
 }
 
@@ -20,26 +24,18 @@ h1 {
     max-width: 100%;
 }
 
-/* Home Page */
-#titleMain {
-    background-image: url(../images/homePic4.jpeg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center; 
-    height: auto;  
-    width: auto; 
-    padding-bottom: 10%; 
-    max-width: 100%;
-}
-
+/* Navbar */
 .navbar {
     padding: 0 0 4.5rem;
+}
+
+.navbar-brand {
+    padding: 0;
 }
 
 .nav-item {
     font-size: 1.2rem;
     margin: 0 4.5% 0 0;
-    margin-top: -10%;
 }
 
 .btn-custom {
@@ -48,7 +44,7 @@ h1 {
 
 .btn-custom:hover {
     background-color: #417D7A;
-    border-color:#417D7A;
+    border-color: #417D7A;
     color: white;
 }
 
@@ -56,8 +52,42 @@ h1 {
     color: rgb(255, 255, 255);
 }
 
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(29,92,99, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+/* Footer */
+#footer {
+    text-align: center;
+    margin-top: 3%;
+}
+
+.footerIcon {
+    font-size: 1.3rem;
+    padding: 1% 1% 1.4% 1%;
+}
+
+.footerText {
+    color: grey;
+    font-size: 1.2rem;
+    margin-bottom: 60px;
+}
+
+/* Home Page */
+#titleMain {
+    background-image: url(../images/homePic4.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: auto;
+    width: auto;
+    padding-bottom: 10%;
+    max-width: 100%;
+    max-height: 842.72px;
+}
+
 .titleName {
-    padding-top: 30%; 
+    padding-top: 30%;
     font-family: 'Poppins', sans-serif;
     color: rgb(255, 255, 255);
     font-size: 3.5rem;
@@ -76,14 +106,7 @@ h1 {
 .titleBHome {
     color: black;
     text-align: center;
-    font-family: 'Montserrat'; 
 }
-
-/* .col-lg-5 {
-    text-align: center;
-    width: 100%;
-    height: 100%; 
-} */
 
 .picSection {
     text-align: center;
@@ -175,55 +198,39 @@ h1 {
     margin-bottom: 20px;
 }
 
-#footer {
-    text-align: center;
-    margin-top: 3%;
-}
-
-.footerIcon {
-    font-size: 1.3rem;
-    padding: 1% 1% 1.4% 1%;
-}
-
-.footerText {
-    color: grey;
-    font-size: 1.2rem;
-    margin-bottom: 60px;
-}
-
-/* Accomodations Page */
-#accomodationMain {
+/* Accommodations Page */
+#accommodationMain {
     background-image: url(../images/d8ab42125604113.611ca9bc57750.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center; 
-    height: auto;  
-    max-width: 100%; 
-    padding-bottom: 20%; 
-
+    background-position: center center;
+    height: auto;
+    max-width: 100%;
+    max-height: 870px;
+    padding-bottom: 11%;
 }
 
-#accomodationDescriptions h2 {
+#accommodationDescriptions h2 {
     font-weight: bold;
 }
 
-.accomodationsName {
+.accommodationsName {
     font-family: 'Poppins', sans-serif;
     color: rgb(255, 255, 255);
     font-size: 2.5rem;
 }
 
-.accomodations-title {
-    padding: 4% 4% 4% 4%; 
+.accommodations-title {
+    padding: 4% 4% 4% 4%;
     text-align: center;
     max-width: 800px;
     color: rgb(255, 255, 255);
-    background-color: rgba(29, 92, 99, .7);  
+    background-color: rgba(29, 92, 99, .7);
     backdrop-filter: blur(10px);
 }
 
-.titling-body-accomodations {
-    margin-top: 15%;
+.titling-body-accommodations {
+    margin-top: 20%;
 }
 
 .generalDescription {
@@ -269,7 +276,7 @@ h1 {
 }
 
 .masterSuite {
-    background-color: #1A3C40;
+    background-color: #1D5C63;
     color: white;
 }
 
@@ -278,22 +285,22 @@ h1 {
     background-image: url(../images/ODADA-Hotel_Paradox-0590.webp);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center; 
+    background-position: center center;
     height: auto;
-    max-width: 100%; 
-
+    max-width: 100%;
+    max-height: 842.72px;
 }
 
 .about-title {
-    margin-top: 50%; 
+    margin-top: 50%;
     padding-top: 5%;
-    padding-bottom: 5%;  
+    padding-bottom: 5%;
     text-align: center;
     max-width: 400px;
     font-family: 'Poppins';
     color: rgb(255, 255, 255);
     font-size: 2.5rem;
-    background-color: rgba(29, 92, 99, .7);  
+    background-color: rgba(29, 92, 99, .7);
     backdrop-filter: blur(10px);
     margin-bottom: 40%;
 }
@@ -315,7 +322,7 @@ h1 {
 
 .missionTitle {
     text-align: center;
-    padding-top: 5%; 
+    padding-top: 5%;
 }
 
 .missionText {
@@ -342,13 +349,13 @@ h1 {
     display: inline-block;
 }
 
-/* Amenities Page */ 
+/* Amenities Page */
 #titleAmenities {
     background-image: url(../images/copernico-cLmOptqvuFQ-unsplash.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    height: auto;  
-    max-width: 100%; 
+    height: auto;
+    max-width: 100%;
 }
 
 .titling-body {
@@ -356,58 +363,51 @@ h1 {
 }
 
 .first-amenity {
-    margin-bottom: -25%; 
+    margin-bottom: -25%;
 }
 
 .second-amenity {
-    margin-top: 10%; 
+    margin-top: 10%;
     margin-bottom: -25%;
 }
 
 .first-amenity-pic {
-    margin-bottom: -30%; 
+    margin-bottom: -30%;
 }
 
-.amenities {
-    margin: 10% 10% 10% 10%;
-    text-align: center;
-    max-width: 550px;
-    max-height: 450px; 
-    background-color: white;
-}    
-
 .text-big {
-    background-color:#1D5C63; 
-    opacity: .5; 
+    background-color: #1D5C63;
+    opacity: .5;
     transform: translate(30%, -250%);
     width: 35%;
-    height: 30%; 
-    padding: 5%; 
-    opacity: .95;  
-    position: sticky; 
+    height: 30%;
+    padding: 5%;
+    opacity: .95;
+    position: sticky;
 }
 
 .text-big2 {
-    background-color:#1D5C63; 
-    opacity: .5; 
+    background-color: #1D5C63;
+    opacity: .5;
     transform: translate(150%, -130%);
     width: 35%;
-    height: 30%; 
-    padding: 5%; 
-    opacity: .95;  
+    height: 30%;
+    padding: 5%;
+    opacity: .95;
 }
 
 .in-blue {
-    color: white; 
+    color: white;
 }
 
 .big-pic {
-    height: 20%; 
-    width: 100%; 
+    height: 10%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .big-amenity2 {
-    margin-bottom: -15%; 
+    margin-bottom: -15%;
 }
 
 .amenities-pic {
@@ -416,121 +416,125 @@ h1 {
 
 .amenities1 {
     width: 50%;
-    height: 50%; 
-    margin-left: 15%; 
-    margin-top: 10%; 
-    margin-bottom: 10%; 
+    height: 50%;
+    margin-left: 15%;
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 .amenity-desc {
-    background-color:#1D5C63;
-    transform: translate(170%,-240%);
+    background-color: #1D5C63;
+    transform: translate(170%, -240%);
     width: 30%;
-    height: 30%; 
-    padding: 5%; 
-    opacity: .95; 
+    height: 30%;
+    padding: 5%;
+    opacity: .95;
 }
 
 .amenities2 {
     width: 50%;
-    height: 50%; 
-    margin-left: 30%; 
-    margin-top: 10%; 
-    margin-bottom: 10%; 
+    height: 50%;
+    margin-left: 30%;
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 .amenity-desc2 {
     background-color: #1D5C63;
-    transform: translate(50%,-240%);
+    transform: translate(50%, -240%);
     width: 30%;
-    height: 30%; 
-    padding: 5%; 
-    opacity: .95; 
+    height: 30%;
+    padding: 5%;
+    opacity: .95;
 }
 
 .amenities-body {
-    padding-top: 5%; 
-    padding-bottom: 5%; 
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
-
 .container {
-    margin-top: -5%; 
-    width: 100%; 
-    height: 75vh; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    flex-direction: column; 
+    margin-top: -5%;
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .map-back {
     background-color: #417D7A;
-    padding-bottom: 5%; 
 }
 
 .mapText {
-    text-align: center;  
-    color: white; 
-    padding-bottom: 10%;
+    text-align: center;
+    color: white;
+    padding-bottom: 2%;
+    font-size: 2.5rem;
 }
 
 .amenitiesText {
     text-align: center;
-    padding-top: 10%; ;
+    padding-top: 10%;
 }
 
 #map {
     width: 100%;
-    height: 500px;
-    border: 2px solid black; 
+    height: 70%;
 }
 
 .map {
-    clear: none; 
+    clear: none;
     text-align: center;
 }
 
 .mapText {
     text-align: center;
-    padding-top: 5%; 
+    padding-top: 5%;
 }
 
 .amenitiesText {
     text-align: center;
-    padding-top: 10%; ;
+    padding-top: 10%;
+    ;
 }
 
 .titleAmenities {
-    padding-left: 3%; 
-    padding-right: 3%; 
-    padding-bottom: 5%; 
-    padding-top: 5%; 
-    margin-top: 10%; 
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+    margin-top: 10%;
     text-align: center;
     max-width: 500px;
     color: rgb(255, 255, 255);
     font-size: 1.5rem;
-    background-color: rgba(29, 92, 99, .7);  
+    background-color: rgba(29, 92, 99, .7);
     backdrop-filter: blur(10px);
-    margin-bottom: 20%; 
+    margin-bottom: 20%;
 }
 
-.luxAmen {  
+.luxAmen {
     font-family: 'Poppins', sans-serif;
 }
 
 .colored {
-    padding-top: 3%; 
+    padding-top: 3%;
     background-color: #1D5C63;
-    padding-bottom: 3%; 
-    border: 2px black solid; 
+    padding-bottom: 3%;
+    border: 2px black solid;
 }
 
 .not-colored {
-    padding-top: 3%; 
-    padding-bottom: 3%; 
-    border: 2px black solid; 
+    padding-top: 3%;
+    padding-bottom: 3%;
+    border: 2px black solid;
+}
+
+.amenitiesFooter {
+    text-align: center;
+    margin-top: -2%;
 }
 
 /* Reserve Page */
@@ -539,23 +543,24 @@ h1 {
     background-image: url(../images/reserveFinal.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center; 
-    height: auto;  
-    width: auto; 
-    padding-bottom: 10%; 
+    background-position: center center;
+    height: auto;
+    width: auto;
+    padding-bottom: 10%;
     max-width: 100%;
+    max-height: 842.72px;
 }
 
 .title-reserve {
-    margin-top: 50%; 
+    margin-top: 50%;
     padding-top: 5%;
-    padding-bottom: 5%;  
+    padding-bottom: 5%;
     text-align: center;
     max-width: 400px;
     font-family: 'Poppins';
     color: rgb(255, 255, 255);
     font-size: 2.5rem;
-    background-color: rgba(29, 92, 99, .7);  
+    background-color: rgba(29, 92, 99, .7);
     backdrop-filter: blur(10px);
 }
 
