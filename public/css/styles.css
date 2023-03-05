@@ -312,6 +312,11 @@ h2 {
     max-height: 842.72px;
 }
 
+.aboutPic {
+    max-height: 249.83px;
+    object-fit: cover;
+}
+
 .about-title {
     margin-top: 50%;
     padding-top: 5%;
