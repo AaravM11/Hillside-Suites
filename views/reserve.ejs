@@ -69,6 +69,7 @@
 
         </section>
 
+        <!-- Shows alert telling the user they have selected more than the maximum occupancy per room -->
         <% if (bookingError === 1) { %>
           <div class="jumbotron-fluid alert alert-danger reserveErrorJumbo">
             <h2 class="display-4 reserveErrorHeader">Correction Needed</h2>
@@ -78,6 +79,7 @@
           </div>
         <% } %>
 
+        <!-- Shows alert telling the user there are no currently available rooms for they info they have entered -->
         <% if (bookingError === 2) { %>
           <div class="jumbotron-fluid alert alert-danger reserveErrorJumbo">
             <h2 class="display-4 reserveErrorHeader">No Available Rooms</h2>
@@ -87,6 +89,7 @@
           </div>
         <% } %>
 
+        <!-- Shows alert telling the user they have entered incorrect dates -->
         <% if (bookingError === 3) { %>
           <div class="jumbotron-fluid alert alert-danger reserveErrorJumbo">
             <h2 class="display-4 reserveErrorHeader">Correction Needed</h2>
@@ -98,6 +101,7 @@
 
         <section id="reserveForm">
 
+          <!-- Form to enter info to find available rooms -->
           <form action="/reserve" class="row formSection needs-validation" method="post" novalidate>
             <div class="col-md-6">
               <label class="form-label">Arrival</label>
@@ -161,7 +165,7 @@
 
           <div class="spacer"></div>
 
-          <!-- Populates the page with all available and applicable rooms -->
+          <!-- Populates the page with all available rooms shown in the RoomType database in MongoDB -->
           <% for (var i = 0; i < availableRooms.length; i++) { %>
             <div class="reserveCard card lg-3">
               <div class="row g-0">
@@ -192,9 +196,11 @@
                       
                       <p class="card-text"><%= availableRooms[i].description %></p>
                       <h3 class="card-text"><%= availableRooms[i].price %><small class="text-muted"> USD/night</small></h3>
-
+                      
+                      <!-- Shows a select button if the user is being shown available rooms -->
                       <% if (availableRooms.length != 4) { %>
                         <form action="/pickRoom" method="post">
+                          <!-- Button to rediret user to checkout -->
                           <button type="submit" value="<%= availableRooms[i].type %>" name="roomButton" id="checkoutBtn" class="btn btn-dark btn-lg">Select</button>
                         </form>
                       <% } %>
@@ -206,6 +212,7 @@
           
         </section>
 
+        <!-- Footer -->
         <footer id="footer">
           
           <i class="footerIcon fa-brands fa-instagram"></i>
@@ -219,10 +226,10 @@
         <!-- JQuery Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script>
-          //Fetch all the forms to apply custom Bootstrap validation styles to
+          //Fetch the form to apply Bootstrap validation styles to
           const forms = document.querySelectorAll('.needs-validation')
 
-          //Loop over them and prevent submission
+          //Loop over unfilled info from the form and prevent submission
           Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
               if (!form.checkValidity()) {
