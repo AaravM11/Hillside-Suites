@@ -32,6 +32,5 @@ Link to github repository: https://github.com/AaravM11/HillsideSuites.git
 Email any one of the creater: aarav.mulinti@gmail.com, havish.boda2@gmail.com, ryan24.sun@gmail.com
 
 # Roadmap
-Add more backend features
-Expand purchase features 
+Add more backend features and expand purchase features 
 
