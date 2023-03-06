@@ -313,7 +313,7 @@ h2 {
 }
 
 .aboutPic {
-    max-height: 400px;
+    height: 400px;
     object-fit: cover;
 }
 
@@ -381,7 +381,7 @@ h2 {
 }
 
 .docBtn {
-    width: 15%;
+    width: 200px;
     margin: 0 2%;
 }
 
