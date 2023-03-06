@@ -375,6 +375,16 @@ h2 {
     display: inline-block;
 }
 
+.documentation {
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+
+.docBtn {
+    width: 15%;
+    margin: 0 2%;
+}
+
 /* Amenities Page */
 #titleAmenities {
     background-image: url(../images/copernico-cLmOptqvuFQ-unsplash.jpg);
@@ -650,13 +660,4 @@ small {
     text-align: center;
     margin: 7% 8%;
     padding: 2% 0;
-}
-
-.termsConditionsButton {
-    padding-top: 2%;
-}
-
-.citations {
-    padding-top: -1%;
-    padding-bottom: 2%;
 }
