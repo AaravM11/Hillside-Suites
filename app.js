@@ -159,6 +159,14 @@ const ordersSchema = {
 
 const Order = mongoose.model("Order", ordersSchema);
 
+//Accounts Database
+const usersSchema = {
+    email: String,
+    password: String
+};
+
+const User = mongoose.model("User", usersSchema);
+
 //Website Pages
 app.get("/" || "/home", function(req, res){
     res.sendFile(__dirname + "/index.html"); 
@@ -224,7 +232,15 @@ app.get("/mailchimp", function(req, res){
     } else {
         res.render("mailchimp.ejs", {mailchimpSuccess});
     }
-})
+});
+
+app.get("/register", function(req, res){
+    res.render("register.ejs");
+});
+
+app.get("/signIn", function(req, res){
+    res.render("signIn.ejs");
+});
 
 var comingFromStripe = 0;
 
@@ -300,6 +316,37 @@ app.get("/success", async function(req, res){
 });
 
 var mailchimpSuccess = 0;
+
+//Register Page
+app.post("/register", async function(req, res){
+
+    await User.create({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    res.redirect("/amenities");
+
+});
+
+app.post("/signIn", async function(req, res){
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.findOne({email: email}, function(err, foundUser){
+        if (err) {
+            console.log(err);
+        } else {
+            if (foundUser) {
+                if (foundUser.password === password) {
+                    res.redirect("/amenities");
+                }
+            }
+        }
+    });
+
+});
 
 //Mailchimp API
 app.post("/", function(req, res){

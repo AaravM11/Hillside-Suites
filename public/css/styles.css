@@ -33,9 +33,10 @@ h2 {
     padding: 0;
 }
 
+/* Original margin 4% */
 .nav-item {
     font-size: 1.2rem;
-    margin: 1% 4% 1% 0;
+    margin: 1% 2.6% 1% 0;
 }
 
 .navBtn {
@@ -656,8 +657,31 @@ small {
     margin: 5% 8% 0 8%;
 }
 
+/* Success Page */
+
 .successJumbo {
     text-align: center;
     margin: 7% 8%;
     padding: 2% 0;
+}
+
+/* Register Page */
+
+.accountCard {
+    padding: 3%;
+    text-align: center;
+}
+
+.accountLabel {
+    margin: 10px;
+    text-align: left;
+}
+
+.accountTitle {
+    margin-bottom: 30px;
+}
+
+.joinBtn {
+    margin-top: 30px;
+    width: 130px;
 }
