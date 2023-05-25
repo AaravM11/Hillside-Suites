@@ -1,4 +1,4 @@
-
+//Imports Node js packages 
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
@@ -6,13 +6,16 @@ const https = require("https");
 const mongoose = require("mongoose");
 const stripe = require("stripe")("sk_test_51MfBlHJC3q9WXHkJ2S874VHuIkq4jva77exzNVkyusdJ5fuTtzqZVBWKaq23b87pFytro8ZPMDnlZuLCT5GfawGl00u514N1ck");
 
+//Set up express with Node js
 const app = express();
-
+//Sets view engine to ejs
 app.set("view engine", "ejs");
+//Serves static files from "public" directory
 app.use(express.static("public"));
+//Configures body-parser middleware
 app.use(bodyParser.urlencoded({extended: true}));
 
-//Connects to MongoDB
+//Connects to MongoDB Database
 const dbUrl = "mongodb+srv://ryan24sun:HBAMRS123@cluster0.7ckyjat.mongodb.net/hillsideSuitesDB?retryWrites=true&w=majority";
 
 const connectDB = async () => {
@@ -32,7 +35,6 @@ connectDB();
 
 //Reserve Page Default Rooms Database Layout
 const roomsDescriptionSchema = {
-    // sessionId: String,
     type: String,
     doubles: Number,
     queens: Number,
@@ -43,9 +45,11 @@ const roomsDescriptionSchema = {
     rooms: Number
 };
 
+//Connects RoomType database with MongoDB
 const RoomType = mongoose.model("RoomType", roomsDescriptionSchema);
 var rooms = 0;
 
+//Reserve page default single room
 const singleRoom = new RoomType({
     type: "Single Room",
     doubles: 0,
@@ -57,6 +61,7 @@ const singleRoom = new RoomType({
     rooms: rooms
 });
 
+//Reserve page default double room
 const doubleRoom = new RoomType({
     type: "Double Room",
     doubles: 2,
@@ -68,6 +73,7 @@ const doubleRoom = new RoomType({
     rooms: rooms
 });
 
+//Reserve page default triple room
 const tripleRoom = new RoomType({
     type: "Triple Room",
     doubles: 2,
@@ -79,6 +85,7 @@ const tripleRoom = new RoomType({
     rooms: rooms
 });
 
+//Reserve page default master suite
 const masterSuite = new RoomType({
     type: "Master Suite",
     doubles: 0,
@@ -107,6 +114,7 @@ const Room = mongoose.model("Room", roomsSchema);
 
 const allRooms = [];
 
+//Creates 35 unbooked rooms
 for (let i = 0; i < 10; i++) {
     const singleRoom = new Room({
         type: "Single Room",
@@ -143,6 +151,7 @@ for (let i = 30; i < 35; i++) {
     allRooms.push(masterSuite);
 }
 
+//Orders layout in database
 const ordersSchema = {
     name: String,
     email: String,
@@ -206,6 +215,7 @@ app.get("/about", function(req, res){
     res.sendFile(__dirname + "/about.html");
 });
 
+//Sets default booking error (error free)
 var bookingError = 0;
 var checkoutRooms = [];
 
@@ -226,7 +236,9 @@ app.get("/checkout", function(req, res){
     res.render("checkout.ejs", {checkoutRooms});
 });
 
+//Mailchimp success page 
 app.get("/mailchimp", function(req, res){    
+    //Prevents user from viewing succccess page unless they have entered their email
     if (mailchimpSuccess === 0) {
         res.redirect("/");
     } else {
@@ -244,8 +256,9 @@ app.get("/signIn", function(req, res){
 
 var comingFromStripe = 0;
 
+//Checkout success page
 app.get("/success", async function(req, res){
-    
+    //Prevents user from viewing page unless they have checked out
     if (comingFromStripe === 0) {
         res.redirect("/");
     } else {
@@ -254,12 +267,15 @@ app.get("/success", async function(req, res){
         );
     
         console.log(sessionOrder);
-    
+        
+        //Sets comingFromStripe to 2 to represent a payment error
         if (comingFromStripe === 1 && sessionOrder.payment_status === "unpaid") {
             comingFromStripe = 2;
         } else {
             if (comingFromStripe === 1 && sessionOrder.payment_status === "paid") {
+                //Sets comingFromStripe to 3 to prevent entering info to MongoDB twice
                 comingFromStripe = 3;
+                //Updates Rooms database for each room the user booked
                 for (let i = 0; i < finalRooms.length; i++) {
                     Room.updateOne({ roomNumber: finalRooms[i].roomNumber }, { booked: true, $push: {dates: [{ startDate: finalRooms[i].startDate, endDate: finalRooms[i].endDate }]} })
                         .then(function() {
@@ -269,6 +285,7 @@ app.get("/success", async function(req, res){
                             console.log(error);
                         })
                 }
+                //Restores default reserve ejs page
                 RoomType.deleteMany({}) 
                     .then(function() {
                         console.log("Available rooms reset");
@@ -287,7 +304,8 @@ app.get("/success", async function(req, res){
                     });
         
                 const finalRoomNumbers = [];
-        
+                
+                //Gets booked room numbers as objects in an array
                 for (let i = 0; i < finalRooms.length; i++) {
                     const roomNumber = finalRooms[i].roomNumber;
                     const roomObject = { roomNumber: roomNumber };
@@ -297,6 +315,7 @@ app.get("/success", async function(req, res){
                 
                 console.log(finalRoomNumbers);
     
+                //Adds order to MongoDB
                 await Order.create({
                     name: sessionOrder.customer_details.name,
                     email: sessionOrder.customer_details.email,
@@ -353,6 +372,7 @@ app.post("/", function(req, res){
 
     const email = req.body.email;
 
+    //Sets user email address to subscribed
     const data = {
         members: [
             {
@@ -366,6 +386,7 @@ app.post("/", function(req, res){
 
     const url = "https://us21.api.mailchimp.com/3.0/lists/7473dea804";
 
+    //Authenticates Mailchimp using API key
     const options = {
         method: "POST",
         auth: "HillsideSuites:05d75f6f5dfc49c208dd6a0f4a302ef6-us21"
@@ -373,6 +394,7 @@ app.post("/", function(req, res){
 
     const request = https.request(url, options, function(response) {
 
+        //Redirects to success page with mailchimpSuccess as 1 if the request was successful
         if (response.statusCode === 200) {
             mailchimpSuccess = 1;
             res.redirect("/mailchimp");
@@ -387,6 +409,7 @@ app.post("/", function(req, res){
         });
     });
 
+    //Sends data to Mailchimp API
     request.write(jsonData);
     request.end();
 });
@@ -400,6 +423,7 @@ var adults;
 var children;
 var totalPeople;
 
+//Prevents checkRooms function from checking the same room multiple times by comparing the room number
 function alreadyChecked(roomNumber) {
     for (let m = 0; m < roomsFilled.length; m++) {
         if (roomsFilled[m] == roomNumber) {
@@ -409,8 +433,10 @@ function alreadyChecked(roomNumber) {
     return false;
 }
 
+//Function to add available room info to array checckoutRooms
 function addToCheckoutRooms(i, rooms) {
 
+    //Sets price of room from default price value
     var price;
     if (rooms[i].type === "Single Room") {
         price = 0;
@@ -422,6 +448,7 @@ function addToCheckoutRooms(i, rooms) {
         price = 3;
     }
 
+    //Info that is pushed to checkoutRooms
     const specificRoom = {
         type: rooms[i].type,
         roomNumber: rooms[i].roomNumber,
@@ -435,12 +462,14 @@ function addToCheckoutRooms(i, rooms) {
     checkoutRooms.push(specificRoom);
 }
 
-//Function to book rooms
+//Function to check for available rooms
 function checkRooms(arrivalDate, departureDate, roomType) {
 
+    //Finds all rooms matching the user's selected room type
     Room.find({type: roomType})
         .then(function(rooms) {
 
+            //Uses UTC dates and the getTime method to universally compare dates
             const testUserStartDate = new Date(arrivalDate);
             var user2StartDate = new Date(Date.UTC(testUserStartDate.getUTCFullYear(), testUserStartDate.getUTCMonth(), testUserStartDate.getUTCDate()));
             userStartDate = user2StartDate.getTime();
@@ -453,6 +482,7 @@ function checkRooms(arrivalDate, departureDate, roomType) {
 
             //Checks each room until it finds one that is vacant
             for (let i = 0; i < rooms.length; i++) {
+                //Finds available room if the room is unbooked
                 if (rooms[i].booked === false) {
                     if (!(alreadyChecked(rooms[i].roomNumber))) {
                         console.log("found open slot");
@@ -463,13 +493,13 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                     }
                 }    
 
-                //Checks if a start and end date is compatible with a booked room
+                //Checks if user start date and end date is compatible with a booked room
                 else {
-
                     var foundBooking = 1;
-
+                    //For loop to check each room's start and end dates
                     for (let j = 0; j < rooms[i].dates.length; j++) {
 
+                        //Initializes UTC dates
                         const testRoomStartDate = new Date(rooms[i].dates[j].startDate);
                         var test2RoomStartDate = new Date(Date.UTC(testRoomStartDate.getUTCFullYear(), testRoomStartDate.getUTCMonth(), testRoomStartDate.getUTCDate()));
                         roomStartDate = test2RoomStartDate.getTime();
@@ -478,12 +508,13 @@ function checkRooms(arrivalDate, departureDate, roomType) {
                         var test2RoomEndDate = new Date(Date.UTC(testRoomEndDate.getUTCFullYear(), testRoomEndDate.getUTCMonth(), testRoomEndDate.getUTCDate()));
                         roomEndDate = test2RoomEndDate.getTime();
 
+                        //Checks if user's dates are before room's dates
                         if (roomStartDate >= userEndDate) {
                             console.log("room start date is greater or equal to user end date (found before)");
-
+                        //Checks if user's dates are after room's dates
                         } else if (roomEndDate <= userStartDate) {
                             console.log("room end date is less than or equal to user start date (found after)");                     
-                        
+                        //If both false, overlap is found and foundBooking is set to 0 to show that the room is unavailable
                         } else {
                             foundBooking = 0;
                             break;
@@ -491,6 +522,7 @@ function checkRooms(arrivalDate, departureDate, roomType) {
 
                     }
                     
+                    //Adds room to checkoutRooms if it is available and has not already been checked
                     if (foundBooking === 1 && !(alreadyChecked(rooms[i].roomNumber))) {
                         console.log("found open slot");
                         console.log(i); 
@@ -515,6 +547,7 @@ app.post("/reserve", function(req, res){
     roomsFilled = [];
     checkoutRooms = [];
 
+    //Retrieves info user entered in reserve form
     arrivalDate = req.body.arrivalDate;
     departureDate = req.body.departureDate;
     rooms = req.body.rooms;
@@ -522,6 +555,7 @@ app.post("/reserve", function(req, res){
     children = req.body.children;
     totalPeople = parseInt(adults) + parseInt(children);
 
+    //Initializes UTC dates
     const today = new Date();
     const todayDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
 
@@ -576,6 +610,7 @@ app.post("/reserve", function(req, res){
                 console.log("Rooms successfully filled!");
                 console.log(roomsFilled);
                 newRooms = [];
+                //Clears current room types to replace with user's available rooms
                 RoomType.deleteMany({}) 
                     .then(function() {
                         console.log("Available rooms reset");
@@ -586,6 +621,7 @@ app.post("/reserve", function(req, res){
                         var triple = 0;
                         var master = 0;
 
+                        //Creates roomTypes to be displayed on reserve ejs
                         const newSingle = new RoomType({
                             type: "Single Room",
                             doubles: 0,
@@ -630,6 +666,7 @@ app.post("/reserve", function(req, res){
                             rooms: rooms
                         });
 
+                        //Pushes room type info to newRooms
                         for (let i = 0; i < roomsFilled.length; i++) {
                             if (1 <= roomsFilled[i] && roomsFilled[i] <= 10 && single === 0) {
                                 newRooms.push(newSingle);
@@ -652,6 +689,7 @@ app.post("/reserve", function(req, res){
 
                     })
                     .then(function() {
+                        //Updates database with user's available room types
                         RoomType.insertMany(newRooms) 
                         .then(function() {
                             console.log("Available rooms updated!");
@@ -660,6 +698,7 @@ app.post("/reserve", function(req, res){
                         .catch(function(error) {
                             console.log(error);
                         })
+                        //Rediret to reserve ejs to show results
                         .finally(function() {
                             res.redirect("/reserve");
                         });
@@ -682,14 +721,17 @@ app.post(("/pickRoom"), async function(req, res) {
     const chosenRoom = req.body.roomButton;
     finalRooms = [];
     var checkoutPic;
+    //Sets comingFromStripe to 1 to prevent seeing success page without checking out 
     comingFromStripe = 1;
 
+    //Pushes to final rooms the room type the user selected
     for (let i = 0; i < checkoutRooms.length; i++) {
         if (chosenRoom === checkoutRooms[i].type) {
             finalRooms.push(checkoutRooms[i]);
         }
     }
 
+    //Gets checkout image from user's chosen room type
     for (let j = 0; j < newRooms.length; j++) {
         if (newRooms[j].type === chosenRoom) {
             checkoutPic = newRooms[j].image;
@@ -705,6 +747,7 @@ app.post(("/pickRoom"), async function(req, res) {
             {
                 price_data: {
                     currency: "usd",
+                    //Multiply user's number of days with price to calculate price for each room
                     unit_amount: finalRooms[0].price * 100 * totalDays,
                     product_data: {
                         name: finalRooms[0].type,
@@ -716,10 +759,12 @@ app.post(("/pickRoom"), async function(req, res) {
             },
         ],
         mode: "payment",
+        //Redirects to sucess page after checkout
         success_url: `${req.protocol}://${req.get("host")}/success`,
         cancel_url: `${req.protocol}://${req.get("host")}/reserve`,
     });
 
+    //Redirects to Stripe checkout
     res.redirect(session.url);
 });
 
