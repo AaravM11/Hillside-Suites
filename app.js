@@ -5,6 +5,7 @@ const request = require("request");
 const https = require("https");
 const mongoose = require("mongoose");
 const stripe = require("stripe")("sk_test_51MfBlHJC3q9WXHkJ2S874VHuIkq4jva77exzNVkyusdJ5fuTtzqZVBWKaq23b87pFytro8ZPMDnlZuLCT5GfawGl00u514N1ck");
+const encrypt = require("mongoose-encryption");
 
 //Set up express with Node js
 const app = express();
@@ -169,10 +170,14 @@ const ordersSchema = {
 const Order = mongoose.model("Order", ordersSchema);
 
 //Accounts Database
-const usersSchema = {
+const usersSchema = new mongoose.Schema ({
     email: String,
     password: String
-};
+});
+
+//Encrypts passwords stored in User database
+const secret = "Hillsidesuitesisanawesomeplacetobe."
+usersSchema.plugin(encrypt, { secret: secret, encryptedFields: ["password"] });
 
 const User = mongoose.model("User", usersSchema);
 
